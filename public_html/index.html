@@ -3,6 +3,8 @@
 	<meta charset="UTF-8" />
 	<title>Phaser - Making your first game, part 3</title>
 	<script type="text/javascript" src="phaser.js"></script>
+        <script src="player.js"></script>
+        
     <style type="text/css">
         body {
             margin: 0;
@@ -13,8 +15,9 @@
 
 <script type="text/javascript">
 //initializes a game
+console.log("hello");
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
+var dinoPlayer;
 function preload() {
   
     game.load.image('star', 'assets/star.png');
@@ -24,46 +27,13 @@ function preload() {
 function create() {
 
     game.add.sprite(100,100, 'firstaid');
-    dino = game.add.sprite(200,200, 'star');
-    game.physics.arcade.enable(dino);
-    dino.body.collideWorldBounds = true;
-    upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    downKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
-    leftKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
-    rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
-    spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    
-    
+    dinoPlayer = new player(game, 'star');
 }
 
 function update() {
-    dino.body.velocity.x = 0;
-    dino.body.velocity.y = 0;
-    
-    if(leftKey.isDown)
-    {
-        //move to the leftarino
-        dino.body.velocity.x = -150;
-    }
-    else if(rightKey.isDown)
-    {
-        //move to the rightarino
-        dino.body.velocity.x = 150;
-    }
-    if(upKey.isDown)
-    {
-        //to the sky!
-        dino.body.velocity.y = -150;
-    }
-    else if(downKey.isDown)
-    {
-        dino.body.velocity.y = 150;
-    }
-
-
+   dinoPlayer.update();
 }
 
 </script>
-
 </body>
 </html>
