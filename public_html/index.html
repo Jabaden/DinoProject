@@ -3,6 +3,7 @@
 	<meta charset="UTF-8" />
 	<title>Phaser - Making your first game, part 3</title>
 	<script type="text/javascript" src="phaser.js"></script>
+        <script type="text/javascript" src="ui.js"></script>
         <script src="player.js"></script>
         
     <style type="text/css">
@@ -23,7 +24,7 @@ var fAid;
 var playerCircle;
 var enemyAlert = false;
 function preload() {
-  
+    ui.preload(game);
     game.load.image('star', 'assets/star.png');
     game.load.image('firstaid', 'assets/firstaid.png');
     game.load.image('diamond', 'assets/diamond.png');
@@ -40,16 +41,21 @@ function create() {
     game.physics.enable(dinoPlayer, Phaser.Physics.ARCADE);
     game.physics.enable(fAid, Phaser.Physics.ARCADE);
     fAid.body.immovable = true;
+    ui.create(game);
     dinoPlayer.anchor.setTo(0.5, 0.5);
+    game.physics.enable(uiColl,Phaser.Physics.ARCADE);
+
 }
 
 function update() {
    dinoPlayer.update();
+   ui.update(game,100,100,100,100,dinoPlayer);
    playerCircle.x = dinoPlayer.getX() + dinoPlayer.getSprite().width/2;
    playerCircle.y = dinoPlayer.getY() + dinoPlayer.getSprite().height/2;
    enemyCircle.x = fAid.x + fAid.width/2;
    enemyCircle.y = fAid.y + fAid.height/2;
    game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
+   game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
    console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
    if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
    {
