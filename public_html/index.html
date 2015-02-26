@@ -16,22 +16,59 @@
 <script type="text/javascript">
 //initializes a game
 console.log("hello");
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+var circle;
 var dinoPlayer;
+var fAid;
+var playerCircle;
+var enemyAlert = false;
 function preload() {
   
     game.load.image('star', 'assets/star.png');
     game.load.image('firstaid', 'assets/firstaid.png');
+    game.load.image('diamond', 'assets/diamond.png');
 }
 
 function create() {
-
-    game.add.sprite(100,100, 'firstaid');
-    dinoPlayer = new player(game, 'star');
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    fAid = game.add.sprite(100,100, 'firstaid');
+    enemyCircle = new Phaser.Circle(game.world.centerX, 100,100);
+    playerCircle = new Phaser.Circle(50,50,10);
+    dinoPlayer = new player(game, 'star','diamond');
+    dinoPlayer.getSprite().width = 25;
+    dinoPlayer.getSprite().height = 25;
+    game.physics.enable(dinoPlayer, Phaser.Physics.ARCADE);
+    game.physics.enable(fAid, Phaser.Physics.ARCADE);
+    fAid.body.immovable = true;
+    dinoPlayer.anchor.setTo(0.5, 0.5);
 }
 
 function update() {
    dinoPlayer.update();
+   playerCircle.x = dinoPlayer.getX() + dinoPlayer.getSprite().width/2;
+   playerCircle.y = dinoPlayer.getY() + dinoPlayer.getSprite().height/2;
+   enemyCircle.x = fAid.x + fAid.width/2;
+   enemyCircle.y = fAid.y + fAid.height/2;
+   game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
+   console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
+   if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
+   {
+       game.physics.arcade.moveToXY(fAid, dinoPlayer.getX(), dinoPlayer.getY());
+       enemyAlert = true;
+   }
+}
+
+function render()
+{
+    game.debug.geom(enemyCircle,'#cfffff', false);
+    game.debug.geom(playerCircle,'#cfffff', false);
+    game.debug.bodyInfo(dinoPlayer.getSprite(), 32, 32);
+}
+
+function touching(player,other)
+{
+    console.log("hi there");
+    game.stage.backgroundColor = '#992d2d';
 }
 
 </script>
