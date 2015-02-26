@@ -1,3 +1,4 @@
+// ui stuff, trying to commit
 var ui = {
     preload: function (game) {
         game.load.image('healthBar', 'assets/healthBar.png');
