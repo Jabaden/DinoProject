@@ -33,7 +33,7 @@ function preload() {
     game.load.image('diamond', 'assets/diamond.png');
     game.load.tilemap('testMap','assets/test_jungle_2.csv', null, Phaser.Tilemap.CSV);
     game.load.tilemap('map2', 'assets/test_jungle_2.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('testTiles', 'assets/test_jungle_tiles.png');
+    game.load.image('testTiles', 'assets/Jungle_03.png');
     
 }
 
@@ -53,7 +53,7 @@ function create() {
     game.physics.enable(uiColl,Phaser.Physics.ARCADE);
     
     // load the testing jungle map:
-    map = game.add.tilemap('testMap', 32, 32);
+    map = game.add.tilemap('map2', 32, 32);
     map.addTilesetImage('testTiles');
     layer = map.createLayer(0);
     //layer = game.add.tilemapLayer(0,0,512,416, tiles, map, 0);
