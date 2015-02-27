@@ -1,7 +1,7 @@
 <html lang="en"> 
 <head> 
 	<meta charset="UTF-8" />
-	<title>Phaser - Making your first game, part 3</title>
+	<title>DinoProject!</title>
 	<script type="text/javascript" src="phaser.js"></script>
         <script type="text/javascript" src="ui.js"></script>
         <script src="player.js"></script>
@@ -23,11 +23,17 @@ var dinoPlayer;
 var fAid;
 var playerCircle;
 var enemyAlert = false;
+var map;
+var layer;
 function preload() {
     ui.preload(game);
     game.load.image('star', 'assets/star.png');
     game.load.image('firstaid', 'assets/firstaid.png');
     game.load.image('diamond', 'assets/diamond.png');
+    game.load.tilemap('testMap','assets/test_jungle_2.csv', null, Phaser.Tilemap.CSV);
+    game.load.tilemap('map2', 'assets/test_jungle_2.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('testTiles', 'assets/test_jungle_tiles.png');
+    
 }
 
 function create() {
@@ -44,8 +50,19 @@ function create() {
     ui.create(game);
     dinoPlayer.anchor.setTo(0.5, 0.5);
     game.physics.enable(uiColl,Phaser.Physics.ARCADE);
-
+    
+    // load the testing jungle map:
+    map = game.add.tilemap('testMap', 32, 32);
+    map.addTilesetImage('testTiles');
+    layer = map.createLayer(0);
+    //layer = game.add.tilemapLayer(0,0,512,416, tiles, map, 0);
+    layer.resizeWorld();
+    // enumerate collidable tile indeces:
+    map.setCollision([5, 6, 12, 13, 2,4, 25, 26, 27, 31, 32, 33, 34, 38, 39, 40,
+        41, 45, 46, 47, 48, 52, 53, 54, 55], true);
+    
 }
+
 
 function update() {
    dinoPlayer.update();
@@ -56,12 +73,15 @@ function update() {
    enemyCircle.y = fAid.y + fAid.height/2;
    game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
    game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
-   console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
+   //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
    if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
    {
        game.physics.arcade.moveToXY(fAid, dinoPlayer.getX(), dinoPlayer.getY());
        enemyAlert = true;
    }
+   
+   // check for collisions with map:
+   game.physics.arcade.collide(dinoPlayer, layer);
 }
 
 function render()
