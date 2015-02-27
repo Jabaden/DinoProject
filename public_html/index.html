@@ -31,13 +31,22 @@ function preload() {
     game.load.image('star', 'assets/star.png');
     game.load.image('firstaid', 'assets/firstaid.png');
     game.load.image('diamond', 'assets/diamond.png');
-    game.load.tilemap('testMap','assets/test_jungle_2.csv', null, Phaser.Tilemap.CSV);
-    game.load.tilemap('map2', 'assets/test_jungle_2.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('map_csv','assets/test_jungle_2.csv', null, Phaser.Tilemap.CSV);
+    game.load.tilemap('map_json', 'assets/test_jungle_2.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('testTiles', 'assets/Jungle_03.png');
     
 }
 
 function create() {
+    // load the testing jungle map:
+    map = game.add.tilemap('map_json');
+    map.addTilesetImage('Jungle_03', 'testTiles');
+    layer = map.createLayer(0);
+    //layer.resizeWorld();
+    // enumerate collidable tile indeces:
+    map.setCollision([5, 6, 12, 13, 2,4, 25, 26, 27, 31, 32, 33, 34, 38, 39, 40,
+        41, 45, 46, 47, 48, 52, 53, 54, 55], true);
+    
     game.physics.startSystem(Phaser.Physics.ARCADE);
     fAid = game.add.sprite(100,100, 'firstaid');
     enemyCircle = new Phaser.Circle(game.world.centerX, 100,100);
@@ -49,19 +58,10 @@ function create() {
     game.physics.enable(fAid, Phaser.Physics.ARCADE);
     fAid.body.immovable = true;
     ui.create(game);
-    dinoPlayer.anchor.setTo(0.5, 0.5);
+   // dinoPlayer.anchor.setTo(0.5, 0.5);
     game.physics.enable(uiColl,Phaser.Physics.ARCADE);
-    
-    // load the testing jungle map:
-    map = game.add.tilemap('map2', 32, 32);
-    map.addTilesetImage('testTiles');
-    layer = map.createLayer(0);
-    //layer = game.add.tilemapLayer(0,0,512,416, tiles, map, 0);
-    layer.resizeWorld();
-    // enumerate collidable tile indeces:
-    map.setCollision([5, 6, 12, 13, 2,4, 25, 26, 27, 31, 32, 33, 34, 38, 39, 40,
-        41, 45, 46, 47, 48, 52, 53, 54, 55], true);
-    
+
+ 
 }
 
 function update() {
