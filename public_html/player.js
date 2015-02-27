@@ -16,10 +16,10 @@ function player(game, image, aImage)
     var leftKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
     var rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    
     dino = game.add.sprite(200,200, image);
     game.physics.arcade.enable(dino);
     dino.body.collideWorldBounds = true;
+    dino.pivot.setTo(dino.width/2, dino.height/2);
     this.update = function()
     {
         dino.body.velocity.x = 0;
@@ -31,6 +31,7 @@ function player(game, image, aImage)
             upFront = false;
             downFront = false;
             rightFont = false;
+            dino.angle = -90;
             dino.body.velocity.x = -150;
         }
         else if(rightKey.isDown)
@@ -40,6 +41,7 @@ function player(game, image, aImage)
             upFront = false;
             downFront = false;
             rightFont = true;
+            dino.angle = 90;
             dino.body.velocity.x = 150;
         }
         if(upKey.isDown)
@@ -49,6 +51,7 @@ function player(game, image, aImage)
             upFront = true;
             downFront = false;
             rightFont = false;
+            dino.angle = 0;
             dino.body.velocity.y = -150;
         }
         else if(downKey.isDown)
@@ -57,13 +60,28 @@ function player(game, image, aImage)
             upFront = false;
             downFront = true;
             rightFont = false;
+            dino.angle = 180;
             dino.body.velocity.y = 150;
         }
         if(spaceKey.isDown)
         {
-            dino.x = 100;
-            attack = game.add.sprite(200,200, aImage);
-            game.time.events.add(1000, attack.destroy, attack);
+            if(leftKey.isDown)
+            {
+                attack = game.add.sprite(dino.x - 50,dino.y, aImage);
+            }
+            else if(rightKey.isDown)
+            {
+                attack = game.add.sprite(dino.x + 50,dino.y, aImage);
+            }
+            else if(upKey.isDown)
+            {
+                attack = game.add.sprite(dino.x,dino.y - 50, aImage);
+            }
+            else if(downKey.isDown)
+            {
+                attack = game.add.sprite(dino.x,dino.y + 50, aImage);
+            }
+            game.time.events.add(100, attack.destroy, attack);
         }
 
     }
