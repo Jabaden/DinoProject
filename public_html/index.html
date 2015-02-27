@@ -55,12 +55,13 @@ function update() {
    enemyCircle.x = fAid.x + fAid.width/2;
    enemyCircle.y = fAid.y + fAid.height/2;
    game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
-   game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
+   game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, null, null, null);
    console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
    if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
    {
        game.physics.arcade.moveToXY(fAid, dinoPlayer.getX(), dinoPlayer.getY());
        enemyAlert = true;
+       console.log("Yep we're alerted.");
    }
 }
 

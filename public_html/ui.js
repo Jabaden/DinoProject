@@ -16,6 +16,8 @@ var ui = {
         horiBar.width = 800;
         horiBar.x = ((game.width / 2) - (horiBar.width / 2));
         horiBar.y = ((game.height) - (horiBar.height));
+        game.physics.arcade.enable(horiBar);
+        horiBar.body.immovable = true;
         uiColl.add(horiBar);
 
         vertBar = game.add.sprite(0, 0, 'vertBar');
@@ -23,6 +25,8 @@ var ui = {
         vertBar.width = 80;
         vertBar.x = ((game.width) - (vertBar.width));
         vertBar.y = ((game.height / 2) - (vertBar.height / 2));
+        game.physics.arcade.enable(vertBar);
+        vertBar.body.immovable = true;
         uiColl.add(vertBar);
         
         vertBar2 = game.add.sprite(0, 0, 'vertBar2');
@@ -30,18 +34,24 @@ var ui = {
         vertBar2.width = 80;
         vertBar2.x = 0;
         vertBar2.y = ((game.height / 2) - (vertBar2.height /2 ));
+        game.physics.arcade.enable(vertBar2);
+        vertBar2.body.immovable = true;
         uiColl.add(vertBar2);
         
         meteor = game.add.sprite(0, game.height / 2, 'meteor');
         meteor.anchor.setTo(0.5, 0.5);
         meteor.x = game.width - vertBar.width / 2;
         meteor.y = meteor.height - meteor.height / 2;
+        game.physics.arcade.enable(meteor);
+        meteor.body.immovable = true;
         uiColl.add(meteor);
         
         healthBar = game.add.sprite(0, game.height / 2, 'healthBar');
         healthBar.x = ((game.width / 2) - (healthBar.width / 2));
         healthBar.y = ((game.height) - (healthBar.height));
         healthBar.cropEnabled = true;
+        game.physics.arcade.enable(healthBar);
+        healthBar.body.immovable = true;
         uiColl.add(healthBar);
     },
     
