@@ -28,7 +28,7 @@ var map;
 var layer;
 function preload() {
     ui.preload(game);
-    game.load.image('star', 'assets/star.png');
+    game.load.image('dinoSelf', 'assets/Dino.png');
     game.load.image('firstaid', 'assets/firstaid.png');
     game.load.image('diamond', 'assets/diamond.png');
     game.load.tilemap('map_json', 'assets/test_jungle_40x40_buffer.json', null, Phaser.Tilemap.TILED_JSON);
@@ -47,18 +47,22 @@ function create() {
         true, 0, false );
     console.log("collision indeces:" + map.collision);
     game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.P2JS);
     fAid = game.add.sprite(100,100, 'firstaid');
     enemyCircle = new Phaser.Circle(game.world.centerX, 100,100);
     playerCircle = new Phaser.Circle(50,50,10);
-    dinoPlayer = new player(game, 'star','diamond');
-    dinoPlayer.getSprite().width = 25;
-    dinoPlayer.getSprite().height = 25;
+    dinoPlayer = new player(game, 'dinoSelf','diamond');
+    dinoPlayer.getSprite().width = 30;
+    dinoPlayer.getSprite().height = 100;
+    dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
+    //dinoPlayer.getSprite().body.width = 25;
+    //dinoPlayer.getSprite().body.height = 75;
+    game.physics.enable(dinoPlayer, Phaser.Physics.P2JS);
     game.physics.enable(dinoPlayer, Phaser.Physics.ARCADE);
-    game.physics.enable(fAid, Phaser.Physics.ARCADE);
+    game.physics.p2.enable(fAid,true);
     game.physics.enable(map, Phaser.Physics.ARCADE);
     fAid.body.immovable = true;
     ui.create(game);
-    dinoPlayer.anchor.setTo(0.5, 0.5);
     game.physics.enable(uiColl,Phaser.Physics.ARCADE);
 
  
@@ -67,16 +71,16 @@ function create() {
 function update() {
    dinoPlayer.update();
    ui.update(game,100,100,100,100,dinoPlayer);
-   playerCircle.x = dinoPlayer.getX() + dinoPlayer.getSprite().width/2;
-   playerCircle.y = dinoPlayer.getY() + dinoPlayer.getSprite().height/2;
-   enemyCircle.x = fAid.x + fAid.width/2;
-   enemyCircle.y = fAid.y + fAid.height/2;
-   game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
-   game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
+   playerCircle.x = dinoPlayer.getX(); //+ dinoPlayer.getSprite().width/2;
+   playerCircle.y = dinoPlayer.getY(); // + dinoPlayer.getSprite().height/2;
+   enemyCircle.x = fAid.x; //+ fAid.width/2;
+   enemyCircle.y = fAid.y;// + fAid.height/2;
+   //game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
+   //game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
    //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
    if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
    {
-       game.physics.arcade.moveToXY(fAid, dinoPlayer.getX(), dinoPlayer.getY());
+       accelerateTo(fAid, dinoPlayer.getSprite(),60);
        enemyAlert = true;
    }
    
@@ -89,13 +93,28 @@ function render()
     game.debug.geom(enemyCircle,'#cfffff', false);
     game.debug.geom(playerCircle,'#cfffff', false);
     game.debug.bodyInfo(dinoPlayer.getSprite(), 32, 32);
+    game.debug.body(dinoPlayer.getSprite());
+    game.debug.body(fAid);
 }
 
-function touching(player,other)
+function accelerateTo(sprite1, sprite2, speed)
+{
+    if(typeof speed === 'undefined')
+    {
+        speed = 60;
+    }
+    var angle = Math.atan2(sprite2.y - sprite1.y, sprite2.x - sprite1.x);
+    sprite1.body.rotation = angle + game.math.degToRad(90);
+    //might want to try velocity or whatever its called
+    sprite1.body.force.x = Math.cos(angle) * speed/2;
+    sprite1.body.force.y = Math.sin(angle) * speed/2;
+}
+
+/*function touching(player,other)
 {
     console.log("hi there");
     game.stage.backgroundColor = '#992d2d';
-}
+}*/
 
 </script>
 </body>

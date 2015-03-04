@@ -17,13 +17,15 @@ function player(game, image, aImage)
     var rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     dino = game.add.sprite(200,200, image);
-    game.physics.arcade.enable(dino);
+    game.physics.p2.enable(dino,true);
+    game.physics.enable(dino, Phaser.Physics.ARCADE);
     dino.body.collideWorldBounds = true;
-    dino.pivot.setTo(dino.width/2, dino.height/2);
+    //dino.pivot.setTo(dino.width/2, dino.height/2);
+    //dino.anchor.setTo(.5, .5);
+    dino.body.fixedRotation = true;
     this.update = function()
     {
-        dino.body.velocity.x = 0;
-        dino.body.velocity.y = 0;
+        dino.body.setZeroVelocity();
         if(leftKey.isDown)
         {
             //move to the leftarino
@@ -31,8 +33,9 @@ function player(game, image, aImage)
             upFront = false;
             downFront = false;
             rightFont = false;
+            dino.body.angle = -90;
             dino.angle = -90;
-            dino.body.velocity.x = -150;
+            dino.body.moveLeft(200);
         }
         else if(rightKey.isDown)
         {
@@ -41,8 +44,9 @@ function player(game, image, aImage)
             upFront = false;
             downFront = false;
             rightFont = true;
+            dino.body.angle = 90;
             dino.angle = 90;
-            dino.body.velocity.x = 150;
+            dino.body.moveRight(200);
         }
         if(upKey.isDown)
         {
@@ -51,8 +55,9 @@ function player(game, image, aImage)
             upFront = true;
             downFront = false;
             rightFont = false;
+            dino.body.angle = 0;
             dino.angle = 0;
-            dino.body.velocity.y = -150;
+            dino.body.moveUp(200);
         }
         else if(downKey.isDown)
         {
@@ -60,8 +65,9 @@ function player(game, image, aImage)
             upFront = false;
             downFront = true;
             rightFont = false;
+            dino.body.angle = 180;
             dino.angle = 180;
-            dino.body.velocity.y = 150;
+            dino.body.moveDown(200);
         }
         if(spaceKey.isDown)
         {
