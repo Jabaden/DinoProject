@@ -87,7 +87,15 @@ function player(game, image, aImage)
             {
                 attack = game.add.sprite(dino.x,dino.y + 50, aImage);
             }
-            game.time.events.add(100, attack.destroy, attack);
+            else
+            {
+                if(leftFront == true)
+                {
+                    attack = game.add.sprite(dino.x - 75,dino.y, aImage);
+                }
+            }
+            game.time.events.add(300, attack.destroy, attack);
+            
         }
 
     }

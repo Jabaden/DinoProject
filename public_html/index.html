@@ -72,7 +72,6 @@ function create() {
     baddies.physicsBodyType = Phaser.Physics.P2JS;
     for (var i = 0; i < 4; i++)
     {
-        console.log("for loop");
         var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
         eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
         eDino.getSprite().body.collides([enemyCollisionGroup, playerCollisionGroup]);
@@ -89,11 +88,22 @@ function update() {
    {
        enemyPool[r].circleUpdate();
    }
+   for(var l = 0; l < enemyPool.length; l++)
+   {
+       if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getCircle()) == true || enemyAlert == true)
+       {
+           enemyAlert = true;
+           for(var q = 0; q < enemyPool.length; q++)
+           {
+               accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(), 60);
+           }
+           
+       }
+   }
+        
    ui.update(game,100,100,100,100,dinoPlayer);
-   playerCircle.x = dinoPlayer.getX(); //+ dinoPlayer.getSprite().width/2;
-   playerCircle.y = dinoPlayer.getY(); // + dinoPlayer.getSprite().height/2;
-   //enemyCircle.x = badDino.getSprite().x; 
-   //enemyCircle.y = badDino.getSprite().y;
+   playerCircle.x = dinoPlayer.getX(); 
+   playerCircle.y = dinoPlayer.getY(); 
    //game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
    //game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
    //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
@@ -111,8 +121,6 @@ function render()
 {
     for(var j = 0; j < enemyPool.length; j++)
     {
-       console.log(j);
-       console.log(enemyPool[j].enemyCircle);
        enemyPool[j].circleRender();
     }
     game.debug.geom(playerCircle,'#cfffff', false);

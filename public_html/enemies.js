@@ -42,4 +42,8 @@ function enemy(game, image, aImage, group)
     {
         return this.badGuy.y;
     }
+    this.getCircle = function()
+    {
+        return this.enemyCircle;
+    }
 }   
