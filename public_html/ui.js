@@ -10,7 +10,8 @@ var ui = {
     
     create: function (game) {
         uiColl = game.add.group();
-        
+        uiColl.enableBody = true;
+        uiColl.physicsBodyType = Phaser.Physics.P2JS;
         horiBar = game.add.sprite(0, 0, 'horiBar');
         horiBar.height = 80;
         horiBar.width = 800;

@@ -5,6 +5,7 @@
 	<script type="text/javascript" src="phaser.js"></script>
         <script type="text/javascript" src="ui.js"></script>
         <script src="player.js"></script>
+        <script src="enemies.js"></script>
         
     <style type="text/css">
         body {
@@ -21,15 +22,19 @@ console.log("hello");
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 var circle;
 var dinoPlayer;
-var fAid;
+//var badDino;
 var playerCircle;
 var enemyAlert = false;
 var map;
 var layer;
+var playerCollisionGroup;
+var enemyCollisionGroup;
+var baddies;
+var enemyPool;
 function preload() {
     ui.preload(game);
     game.load.image('dinoSelf', 'assets/Dino.png');
-    game.load.image('firstaid', 'assets/firstaid.png');
+    game.load.image('dinoBG', 'assets/Extinction_tri.png');
     game.load.image('diamond', 'assets/diamond.png');
     game.load.tilemap('map_json', 'assets/test_jungle_40x40_buffer.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('testTiles', 'assets/Jungle_04.png');
@@ -37,6 +42,7 @@ function preload() {
 }
 
 function create() {
+    enemyPool = [];
     // load the testing jungle map:
     map = game.add.tilemap('map_json');
     map.addTilesetImage('Jungle_04', 'testTiles');
@@ -48,41 +54,54 @@ function create() {
     console.log("collision indeces:" + map.collision);
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.startSystem(Phaser.Physics.P2JS);
-    fAid = game.add.sprite(100,100, 'firstaid');
-    enemyCircle = new Phaser.Circle(game.world.centerX, 100,100);
     playerCircle = new Phaser.Circle(50,50,10);
     dinoPlayer = new player(game, 'dinoSelf','diamond');
     dinoPlayer.getSprite().width = 30;
     dinoPlayer.getSprite().height = 100;
     dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
-    //dinoPlayer.getSprite().body.width = 25;
-    //dinoPlayer.getSprite().body.height = 75;
-    game.physics.enable(dinoPlayer, Phaser.Physics.P2JS);
-    game.physics.enable(dinoPlayer, Phaser.Physics.ARCADE);
-    game.physics.p2.enable(fAid,true);
     game.physics.enable(map, Phaser.Physics.ARCADE);
-    fAid.body.immovable = true;
+    game.physics.p2.setImpactEvents(true);
+    playerCollisionGroup = game.physics.p2.createCollisionGroup();
+    enemyCollisionGroup = game.physics.p2.createCollisionGroup();
+    game.physics.p2.updateBoundsCollisionGroup();
     ui.create(game);
-    game.physics.enable(uiColl,Phaser.Physics.ARCADE);
-
- 
+    //game.physics.enable(uiColl,Phaser.Physics.P2JS);
+    game.physics.p2.restitution = 0.1;
+    baddies = game.add.group();
+    baddies.enableBody = true;
+    baddies.physicsBodyType = Phaser.Physics.P2JS;
+    for (var i = 0; i < 4; i++)
+    {
+        console.log("for loop");
+        var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
+        eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
+        eDino.getSprite().body.collides([enemyCollisionGroup, playerCollisionGroup]);
+        enemyPool.push(eDino);
+    }
+    
+    dinoPlayer.getSprite().body.setCollisionGroup(playerCollisionGroup);
+    dinoPlayer.getSprite().body.collides(enemyCollisionGroup);
 }
 
 function update() {
    dinoPlayer.update();
+   for(var r = 0; r < enemyPool.length; r++)
+   {
+       enemyPool[r].circleUpdate();
+   }
    ui.update(game,100,100,100,100,dinoPlayer);
    playerCircle.x = dinoPlayer.getX(); //+ dinoPlayer.getSprite().width/2;
    playerCircle.y = dinoPlayer.getY(); // + dinoPlayer.getSprite().height/2;
-   enemyCircle.x = fAid.x; //+ fAid.width/2;
-   enemyCircle.y = fAid.y;// + fAid.height/2;
+   //enemyCircle.x = badDino.getSprite().x; 
+   //enemyCircle.y = badDino.getSprite().y;
    //game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
    //game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
    //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
-   if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
-   {
-       accelerateTo(fAid, dinoPlayer.getSprite(),60);
-       enemyAlert = true;
-   }
+   //if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
+   //{
+       //accelerateTo(badDino.getSprite(), dinoPlayer.getSprite(),60);
+       //enemyAlert = true;
+   //}
    
    // check for collisions with map:
    game.physics.arcade.collide(dinoPlayer, layer);
@@ -90,11 +109,16 @@ function update() {
 
 function render()
 {
-    game.debug.geom(enemyCircle,'#cfffff', false);
+    for(var j = 0; j < enemyPool.length; j++)
+    {
+       console.log(j);
+       console.log(enemyPool[j].enemyCircle);
+       enemyPool[j].circleRender();
+    }
     game.debug.geom(playerCircle,'#cfffff', false);
     game.debug.bodyInfo(dinoPlayer.getSprite(), 32, 32);
     game.debug.body(dinoPlayer.getSprite());
-    game.debug.body(fAid);
+    //game.debug.body(badDino);
 }
 
 function accelerateTo(sprite1, sprite2, speed)
