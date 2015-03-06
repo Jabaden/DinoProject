@@ -39,6 +39,11 @@ function preload() {
     //game.load.tilemap('map_json', 'assets/test_jungle_40x40_buffer.json', null, Phaser.Tilemap.TILED_JSON);
     //game.load.image('testTiles', 'assets/Jungle_04.png');
     game.load.tilemap('tilemap_0_json', 'assets/tilemap_0.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('tilemap_1_json', 'assets/tilemap_1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('tilemap_2_json', 'assets/tilemap_2.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('tilemap_3_json', 'assets/tilemap_3.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('tilemap_4_json', 'assets/tilemap_4.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('tilemap_5_json', 'assets/tilemap_5.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tiles', 'assets/Tiles.png');
     
 }
@@ -51,8 +56,11 @@ function create() {
     //map.addTilesetImage('Jungle_04', 'testTiles');
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.stage.backgroundColor = '#000000';
-
-    map = game.add.tilemap('tilemap_0_json');
+    
+    var map_index = Math.floor( Math.random()*6 );
+    console.log("******index: " + map_index + "*********");
+        //map = game.add.tilemap('tilemap_0_json');
+    map = game.add.tilemap('tilemap_' + map_index + '_json');
     map.addTilesetImage('Tiles', 'Tiles');
     
     //layer.resizeWorld();
@@ -65,7 +73,7 @@ function create() {
     map.setCollisionBetween(2, 6, true, 0);
     map.setCollisionBetween(10, 11, true, 0);
     tileObjects = game.physics.p2.convertTilemap(map, bg_layer);
-    bg_layer.debug = true;
+    //bg_layer.debug = true; // highlight collidable tiles
     game.physics.enable(bg_layer);
 
     console.log(map.collideIndexes);
