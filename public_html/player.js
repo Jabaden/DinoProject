@@ -9,6 +9,8 @@ var upFront = false;
 var downFront = false;
 var leftFront = false;
 var rightFront = false;
+var isAttacking = false;
+var swipe;
 function player(game, image, aImage)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -17,22 +19,28 @@ function player(game, image, aImage)
     var rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     dino = game.add.sprite(200,200, image);
+    swipe = game.add.sprite(250,250, aImage);
     game.physics.p2.enable(dino,true);
+    game.physics.p2.enable(swipe,true);
     game.physics.enable(dino, Phaser.Physics.ARCADE);
     dino.body.collideWorldBounds = true;
-    //dino.pivot.setTo(dino.width/2, dino.height/2);
-    //dino.anchor.setTo(.5, .5);
     dino.body.fixedRotation = true;
+    swipe.body.kinematic = true;
+    swipe.kill();
+    
+    //swipe.revive();
+    //swipe.body.fixedRotation = true;
     this.update = function()
     {
         dino.body.setZeroVelocity();
+        if(isAttacking == false) {
         if(leftKey.isDown)
         {
             //move to the leftarino
             leftFront = true;
             upFront = false;
             downFront = false;
-            rightFont = false;
+            rightFront = false;
             dino.body.angle = -90;
             dino.angle = -90;
             dino.body.moveLeft(200);
@@ -43,7 +51,7 @@ function player(game, image, aImage)
             leftFront = false;
             upFront = false;
             downFront = false;
-            rightFont = true;
+            rightFront = true;
             dino.body.angle = 90;
             dino.angle = 90;
             dino.body.moveRight(200);
@@ -54,50 +62,89 @@ function player(game, image, aImage)
             leftFront = false;
             upFront = true;
             downFront = false;
-            rightFont = false;
+            rightFront = false;
             dino.body.angle = 0;
             dino.angle = 0;
             dino.body.moveUp(200);
         }
         else if(downKey.isDown)
         {
+            //STRAIGHT TO HELL
             leftFront = false;
             upFront = false;
             downFront = true;
-            rightFont = false;
+            rightFront = false;
             dino.body.angle = 180;
             dino.angle = 180;
             dino.body.moveDown(200);
         }
-        if(spaceKey.isDown)
+        if(spaceKey.isDown && isAttacking == false)
         {
             if(leftKey.isDown)
             {
-                attack = game.add.sprite(dino.x - 50,dino.y, aImage);
+                swipe.revive();
+                swipe.body.x = dino.x -80;
+                swipe.body.y = dino.y;
             }
             else if(rightKey.isDown)
             {
-                attack = game.add.sprite(dino.x + 50,dino.y, aImage);
+                swipe.revive();
+                swipe.body.x = dino.x + 75;
+                swipe.body.y = dino.y;
             }
             else if(upKey.isDown)
             {
-                attack = game.add.sprite(dino.x,dino.y - 50, aImage);
+                swipe.revive();
+                swipe.body.x = dino.x;
+                swipe.body.y = dino.y - 85;
             }
             else if(downKey.isDown)
             {
-                attack = game.add.sprite(dino.x,dino.y + 50, aImage);
+                swipe.revive();
+                swipe.body.x = dino.x;
+                swipe.body.y = dino.y + 75;
             }
             else
             {
                 if(leftFront == true)
                 {
-                    attack = game.add.sprite(dino.x - 75,dino.y, aImage);
+                    swipe.revive();
+                swipe.body.x = dino.x -80;
+                swipe.body.y = dino.y;
+                }
+                else if(rightFront == true)
+                {
+                    swipe.revive();
+                swipe.body.x = dino.x + 75;
+                swipe.body.y = dino.y;
+                }
+                else if(upFront == true)
+                {
+                    swipe.revive();
+                swipe.body.x = dino.x;
+                swipe.body.y = dino.y - 85;
+                }
+                else
+                {
+                    swipe.revive();
+                swipe.body.x = dino.x;
+                swipe.body.y = dino.y + 75;
                 }
             }
-            game.time.events.add(300, attack.destroy, attack);
-            
+            isAttacking = true;
+            game.time.events.add(300, attackAgain, this);
+            game.time.events.add(300, swipe.kill, swipe);
         }
 
+    }
+    }
+    function attackAgain()
+    {
+        isAttacking = false;
+    }
+    this.killAttack = function()
+    {
+        attack.destroy;
     }
     this.getX = function()
     {
@@ -110,6 +157,10 @@ function player(game, image, aImage)
     this.getSprite = function()
     {
         return dino;
+    }
+    this.getAttack = function()
+    {
+        return swipe;
     }
 }
 

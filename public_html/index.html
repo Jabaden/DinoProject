@@ -54,7 +54,7 @@ function create() {
     console.log("collision indeces:" + map.collision);
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.startSystem(Phaser.Physics.P2JS);
-    playerCircle = new Phaser.Circle(50,50,10);
+    playerCircle = new Phaser.Circle(50,50,120);
     dinoPlayer = new player(game, 'dinoSelf','diamond');
     dinoPlayer.getSprite().width = 30;
     dinoPlayer.getSprite().height = 100;
@@ -75,11 +75,15 @@ function create() {
         var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
         eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
         eDino.getSprite().body.collides([enemyCollisionGroup, playerCollisionGroup]);
+        eDino.getSprite().health = 1;
         enemyPool.push(eDino);
     }
     
     dinoPlayer.getSprite().body.setCollisionGroup(playerCollisionGroup);
+    dinoPlayer.getAttack().body.setCollisionGroup(playerCollisionGroup);
     dinoPlayer.getSprite().body.collides(enemyCollisionGroup);
+    dinoPlayer.getAttack().body.collides(enemyCollisionGroup);
+    dinoPlayer.getAttack().body.onBeginContact.add(directHit, this);
 }
 
 function update() {
@@ -138,8 +142,8 @@ function accelerateTo(sprite1, sprite2, speed)
     var angle = Math.atan2(sprite2.y - sprite1.y, sprite2.x - sprite1.x);
     sprite1.body.rotation = angle + game.math.degToRad(90);
     //might want to try velocity or whatever its called
-    sprite1.body.force.x = Math.cos(angle) * speed/2;
-    sprite1.body.force.y = Math.sin(angle) * speed/2;
+    sprite1.body.velocity.x = Math.cos(angle) * speed/2;
+    sprite1.body.velocity.y = Math.sin(angle) * speed/2;
 }
 
 /*function touching(player,other)
@@ -147,7 +151,24 @@ function accelerateTo(sprite1, sprite2, speed)
     console.log("hi there");
     game.stage.backgroundColor = '#992d2d';
 }*/
-
+//body is the body you hit
+function directHit (body, shapeA, shapeB, equation) 
+{
+    console.log("direct hit!");
+    console.log(body.sprite.health);
+    body.sprite.health -= 1;
+    if(body.sprite.health <= 0)
+    {
+        body.sprite.kill();
+        for(var a = 0; a < enemyPool.length; a++)
+        {
+            if(enemyPool[a].getSprite().body === body)
+            {
+               enemyPool.splice(a, 1);
+            }
+        }
+    }
+}
 </script>
 </body>
 </html>
