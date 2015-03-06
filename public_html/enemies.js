@@ -12,7 +12,8 @@ function enemy(game, image, aImage, group)
     game.physics.p2.enable(this.badGuy,true);
     game.physics.enable(this.badGuy, Phaser.Physics.ARCADE);
     this.badGuy.body.collideWorldBounds = true;
-    this.enemyCircle = new Phaser.Circle(game.world.centerX, 100,100);
+    this.enemyCircle = new Phaser.Circle(game.world.centerX, 150,150);
+    this.health = 1;
 
     this.update = function()
     {
