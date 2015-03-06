@@ -26,7 +26,7 @@ var dinoPlayer;
 var playerCircle;
 var enemyAlert = false;
 var map;
-var layer;
+var bg_layer;
 var playerCollisionGroup;
 var enemyCollisionGroup;
 var baddies;
@@ -36,24 +36,36 @@ function preload() {
     game.load.image('dinoSelf', 'assets/Dino.png');
     game.load.image('dinoBG', 'assets/Extinction_tri.png');
     game.load.image('diamond', 'assets/diamond.png');
-    game.load.tilemap('map_json', 'assets/test_jungle_40x40_buffer.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('testTiles', 'assets/Jungle_04.png');
+    //game.load.tilemap('map_json', 'assets/test_jungle_40x40_buffer.json', null, Phaser.Tilemap.TILED_JSON);
+    //game.load.image('testTiles', 'assets/Jungle_04.png');
+    game.load.tilemap('tilemap_0_json', 'assets/tilemap_0.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('Tiles', 'assets/Tiles.png');
     
 }
 
 function create() {
     enemyPool = [];
     // load the testing jungle map:
-    map = game.add.tilemap('map_json');
-    map.addTilesetImage('Jungle_04', 'testTiles');
-    layer = map.createLayer(0);
+    //map = game.add.tilemap('map_json');
+    //map.addTilesetImage('Jungle_04', 'testTiles');
+    
+    map = game.add.tilemap('tilemap_0_json');
+    map.addTilesetImage('Tiles', 'Tiles');
+    
     //layer.resizeWorld();
     // enumerate collidable tile indeces:
-    map.setCollision( [5, 6, 12, 13, 31, 32, 33, 39, 40, 46, 47, 53, 54],
-        true, 0, false );
-    console.log("collision indeces:" + map.collision);
+    map.setCollisionBetween(1, 10, true);
+    //map.setCollisionByExclusion([0]);
+    bg_layer = map.createLayer(0);
+//    map.setCollision( [5, 6, 12, 13, 31, 32, 33, 39, 40, 46, 47, 53, 54],
+//        true, 0, false );
+    bg_layer.resizeWorld();
+    
+    
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.convertTilemap(map, bg_layer, true, false);
+        
     playerCircle = new Phaser.Circle(50,50,120);
     dinoPlayer = new player(game, 'dinoSelf','diamond');
     dinoPlayer.getSprite().width = 30;
@@ -117,9 +129,7 @@ function update() {
        //enemyAlert = true;
    //}
    
-   // check for collisions with map:
-   game.physics.arcade.collide(dinoPlayer, layer);
-}
+  }
 
 function render()
 {
