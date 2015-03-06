@@ -101,6 +101,7 @@ function create() {
             playerCollisionGroup, wallCollisionGroup]);
         eDino.getSprite().health = 1;
         enemyPool.push(eDino);
+        console.log(eDino.getSprite().body.health);
     }
     
     dinoPlayer.getSprite().body.setCollisionGroup(playerCollisionGroup);
@@ -178,7 +179,8 @@ function directHit (body, shapeA, shapeB, equation)
 {
     console.log("direct hit!");
     console.log(body.sprite.health);
-    body.sprite.health -= 1;
+    body.sprite.damage(1);
+    console.log(body.sprite.health);
     if(body.sprite.health <= 0)
     {
         body.sprite.kill();
