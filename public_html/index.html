@@ -62,7 +62,8 @@ function create() {
     bg_layer.resizeWorld();
 
     map.setLayer(0);
-    map.setCollisionBetween(2, 10, true, 0);
+    map.setCollisionBetween(2, 6, true, 0);
+    map.setCollisionBetween(10, 11, true, 0);
     tileObjects = game.physics.p2.convertTilemap(map, bg_layer);
     bg_layer.debug = true;
     game.physics.enable(bg_layer);
@@ -105,7 +106,8 @@ function create() {
     {
         var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
         eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
-        eDino.getSprite().body.collides([enemyCollisionGroup, playerCollisionGroup]);
+        eDino.getSprite().body.collides([enemyCollisionGroup, 
+            playerCollisionGroup]);
         eDino.getSprite().health = 1;
         enemyPool.push(eDino);
     }
@@ -126,7 +128,7 @@ function update() {
    }
    for(var l = 0; l < enemyPool.length; l++)
    {
-       if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getCircle()) == true || enemyAlert == true)
+       if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getCircle()) === true || enemyAlert === true)
        {
            enemyAlert = true;
            for(var q = 0; q < enemyPool.length; q++)
