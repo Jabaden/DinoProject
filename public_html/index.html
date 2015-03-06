@@ -57,10 +57,11 @@ function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.stage.backgroundColor = '#000000';
     
+    //choose a random map indexed [0, 1, ..., 5]:
     var map_index = Math.floor( Math.random()*6 );
-    console.log("******index: " + map_index + "*********");
-        //map = game.add.tilemap('tilemap_0_json');
     map = game.add.tilemap('tilemap_' + map_index + '_json');
+    // uncomment to force a particular map (for debugging maybe)
+    //map = game.add.tilemap('tilemap_0_json'); 
     map.addTilesetImage('Tiles', 'Tiles');
     
     //layer.resizeWorld();
