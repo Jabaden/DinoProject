@@ -45,36 +45,48 @@ function preload() {
 
 function create() {
     enemyPool = [];
+
     // load the testing jungle map:
     //map = game.add.tilemap('map_json');
     //map.addTilesetImage('Jungle_04', 'testTiles');
-    
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    game.stage.backgroundColor = '#000000';
+
     map = game.add.tilemap('tilemap_0_json');
     map.addTilesetImage('Tiles', 'Tiles');
     
     //layer.resizeWorld();
     // enumerate collidable tile indeces:
-    map.setCollisionBetween(1, 10, true);
     //map.setCollisionByExclusion([0]);
     bg_layer = map.createLayer(0);
+    bg_layer.resizeWorld();
+
+    map.setLayer(0);
+    map.setCollisionBetween(2, 10, true, 0);
+    tileObjects = game.physics.p2.convertTilemap(map, bg_layer);
+    bg_layer.debug = true;
+    game.physics.enable(bg_layer);
+
+    console.log(map.collideIndexes);
+
+
 //    map.setCollision( [5, 6, 12, 13, 31, 32, 33, 39, 40, 46, 47, 53, 54],
 //        true, 0, false );
-    bg_layer.resizeWorld();
+
     
     
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.p2.convertTilemap(map, bg_layer, true, false);
+
         
     playerCircle = new Phaser.Circle(50,50,120);
     dinoPlayer = new player(game, 'dinoSelf','diamond');
     dinoPlayer.getSprite().width = 30;
     dinoPlayer.getSprite().height = 100;
     dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
-    game.physics.enable(map, Phaser.Physics.ARCADE);
+    // game.physics.enable(map, Phaser.Physics.ARCADE);
     game.physics.p2.setImpactEvents(true);
     playerCollisionGroup = game.physics.p2.createCollisionGroup();
     enemyCollisionGroup = game.physics.p2.createCollisionGroup();
+    tilesCollisionGroup = game.physics.p2.createCollisionGroup();
     game.physics.p2.updateBoundsCollisionGroup();
     ui.create(game);
     //game.physics.enable(uiColl,Phaser.Physics.P2JS);
@@ -82,6 +94,13 @@ function create() {
     baddies = game.add.group();
     baddies.enableBody = true;
     baddies.physicsBodyType = Phaser.Physics.P2JS;
+    
+    for (var i = 0; i < tileObjects.length; i++) {
+        var tileBody = tileObjects[i];
+        tileBody.setCollisionGroup(tilesCollisionGroup);
+        tileBody.collides(playerCollisionGroup);
+    }
+    
     for (var i = 0; i < 4; i++)
     {
         var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
@@ -95,6 +114,7 @@ function create() {
     dinoPlayer.getAttack().body.setCollisionGroup(playerCollisionGroup);
     dinoPlayer.getSprite().body.collides(enemyCollisionGroup);
     dinoPlayer.getAttack().body.collides(enemyCollisionGroup);
+    dinoPlayer.getSprite().body.collides(tilesCollisionGroup);
     dinoPlayer.getAttack().body.onBeginContact.add(directHit, this);
 }
 
@@ -116,7 +136,7 @@ function update() {
            
        }
    }
-        
+     
    ui.update(game,100,100,100,100,dinoPlayer);
    playerCircle.x = dinoPlayer.getX(); 
    playerCircle.y = dinoPlayer.getY(); 

@@ -11,6 +11,7 @@ var leftFront = false;
 var rightFront = false;
 var isAttacking = false;
 var swipe;
+var playerXP = 0;
 function player(game, image, aImage)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -23,6 +24,7 @@ function player(game, image, aImage)
     game.physics.p2.enable(dino,true);
     game.physics.p2.enable(swipe,true);
     game.physics.enable(dino, Phaser.Physics.ARCADE);
+    game.physics.enable(dino)
     dino.body.collideWorldBounds = true;
     dino.body.fixedRotation = true;
     swipe.body.kinematic = true;
@@ -32,6 +34,7 @@ function player(game, image, aImage)
     //swipe.body.fixedRotation = true;
     this.update = function()
     {
+        
         dino.body.setZeroVelocity();
         if(isAttacking == false) {
         if(leftKey.isDown)
@@ -161,6 +164,14 @@ function player(game, image, aImage)
     this.getAttack = function()
     {
         return swipe;
+    }
+    
+    this.setXP = function(xp){
+        playerXP = xp;
+    }
+    
+    this.getXP = function(){
+        return playerXP;
     }
 }
 
