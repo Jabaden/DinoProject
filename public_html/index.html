@@ -118,7 +118,6 @@ function create() {
         eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
         eDino.getSprite().body.collides([enemyCollisionGroup, 
             playerCollisionGroup,tilesCollisionGroup]);
-        eDino.getSprite().health = 1;
         enemyPool.push(eDino);
     }
     
