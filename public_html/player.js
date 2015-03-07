@@ -155,7 +155,8 @@ function player(game, image, aImage, attackSound)
                     swipe.body.angle = -180;
                 }
             }
-            swipe.animations.play('attackSwipe', 5, true);
+            swipe.animations.stop(true);
+            swipe.animations.play('attackSwipe', 10, true);
             aSound.play();
             isAttacking = true;
             game.time.events.add(300, attackAgain, this);
