@@ -24,6 +24,7 @@ function player(game, image, aImage, attackSound)
     //aSound.addMarker('testAttack', 1, 1.0);
     dino = game.add.sprite(200,200, image);
     swipe = game.add.sprite(250,250, aImage);
+    swipe.animations.add('attackSwipe');
     game.physics.p2.enable(dino,false);
     game.physics.p2.enable(swipe,false);
     game.physics.enable(dino, Phaser.Physics.ARCADE);
@@ -91,12 +92,16 @@ function player(game, image, aImage, attackSound)
                 swipe.revive();
                 swipe.body.x = dino.x -80;
                 swipe.body.y = dino.y;
+                swipe.angle = -90;
+                swipe.body.angle = -90;
             }
             else if(rightKey.isDown)
             {
                 swipe.revive();
                 swipe.body.x = dino.x + 75;
                 swipe.body.y = dino.y;
+                swipe.angle = 90;
+                swipe.body.angle = 90;
                 
             }
             else if(upKey.isDown)
@@ -104,40 +109,53 @@ function player(game, image, aImage, attackSound)
                 swipe.revive();
                 swipe.body.x = dino.x;
                 swipe.body.y = dino.y - 85;
+                swipe.angle = 0;
+                swipe.body.angle = 0;
             }
             else if(downKey.isDown)
             {
                 swipe.revive();
                 swipe.body.x = dino.x;
                 swipe.body.y = dino.y + 75;
+                swipe.angle = -180;
+                swipe.body.angle = -180;
             }
             else
             {
                 if(leftFront == true)
                 {
                     swipe.revive();
-                swipe.body.x = dino.x -80;
-                swipe.body.y = dino.y;
+                    swipe.body.x = dino.x -80;
+                    swipe.body.y = dino.y;
+                    swipe.angle = -90;
+                    swipe.body.angle = -90;
                 }
                 else if(rightFront == true)
                 {
                     swipe.revive();
-                swipe.body.x = dino.x + 75;
-                swipe.body.y = dino.y;
+                    swipe.body.x = dino.x + 75;
+                    swipe.body.y = dino.y;
+                    swipe.angle = 90;
+                    swipe.body.angle = 90;
                 }
                 else if(upFront == true)
                 {
                     swipe.revive();
-                swipe.body.x = dino.x;
-                swipe.body.y = dino.y - 85;
+                    swipe.body.x = dino.x;
+                    swipe.body.y = dino.y - 85;
+                    swipe.angle = 0;
+                    swipe.body.angle = 0;
                 }
                 else
                 {
                     swipe.revive();
-                swipe.body.x = dino.x;
-                swipe.body.y = dino.y + 75;
+                    swipe.body.x = dino.x;
+                    swipe.body.y = dino.y + 75;
+                    swipe.angle = -180;
+                    swipe.body.angle = -180;
                 }
             }
+            swipe.animations.play('attackSwipe', 5, true);
             aSound.play();
             isAttacking = true;
             game.time.events.add(300, attackAgain, this);
