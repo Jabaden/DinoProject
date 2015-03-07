@@ -19,15 +19,14 @@ function enemy(game, image, aImage, group)
         var x;
         var y;
         var blocked = body.blocked;
-        console.log("***" + body.toString() + ", " + blocked + "***")
+        console.log("***" + body + ", " + blocked + "***");
         while (blocked.up || blocked.down || blocked.left || blocked.right) {
-            
             x = game.world.randomX;
             y = game.world.randomY;
             this.badGuy.x = x;
             this.badGuy.y = y;
         }
-    }
+    };
     this.findUnoccupied(game, this.badGuy.body);
     
     this.update = function()
