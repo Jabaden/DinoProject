@@ -15,10 +15,11 @@ function enemy(game, image, aImage, group)
     this.enemyCircle = new Phaser.Circle(game.world.centerX, 150,150);
     this.badGuy.health = 3;
     
-    this.findUnoccupied = function(game) {
+    this.findUnoccupied = function(game, body) {
         var x;
         var y;
-        var blocked = this.badGuy.body.blocked;
+        var blocked = body.blocked;
+        console.log("***" + body.toString() + ", " + blocked + "***")
         while (blocked.up || blocked.down || blocked.left || blocked.right) {
             
             x = game.world.randomX;
@@ -27,7 +28,7 @@ function enemy(game, image, aImage, group)
             this.badGuy.y = y;
         }
     }
-    this.findUnoccupied(game);
+    this.findUnoccupied(game, this.badGuy.body);
     
     this.update = function()
     {
