@@ -12,19 +12,22 @@ var rightFront = false;
 var isAttacking = false;
 var swipe;
 var playerXP = 0;
-function player(game, image, aImage)
+var aSound;
+function player(game, image, aImage, attackSound)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
     var downKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
     var leftKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
     var rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    aSound = game.add.audio(attackSound);
+    //aSound.addMarker('testAttack', 1, 1.0);
     dino = game.add.sprite(200,200, image);
     swipe = game.add.sprite(250,250, aImage);
-    game.physics.p2.enable(dino,true);
-    game.physics.p2.enable(swipe,true);
+    game.physics.p2.enable(dino,false);
+    game.physics.p2.enable(swipe,false);
     game.physics.enable(dino, Phaser.Physics.ARCADE);
-    game.physics.enable(dino)
+    game.physics.enable(dino);
     dino.body.collideWorldBounds = true;
     dino.body.fixedRotation = true;
     swipe.body.kinematic = true;
@@ -94,6 +97,7 @@ function player(game, image, aImage)
                 swipe.revive();
                 swipe.body.x = dino.x + 75;
                 swipe.body.y = dino.y;
+                
             }
             else if(upKey.isDown)
             {
@@ -134,6 +138,7 @@ function player(game, image, aImage)
                 swipe.body.y = dino.y + 75;
                 }
             }
+            aSound.play();
             isAttacking = true;
             game.time.events.add(300, attackAgain, this);
             game.time.events.add(300, swipe.kill, swipe);
