@@ -110,6 +110,7 @@ function create() {
         var tileBody = tileObjects[i];
         tileBody.setCollisionGroup(tilesCollisionGroup);
         tileBody.collides(playerCollisionGroup);
+        tileBody.collides(enemyCollisionGroup);
     }
     
     for (var i = 0; i < 4; i++)
@@ -117,7 +118,8 @@ function create() {
         var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
         eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
         eDino.getSprite().body.collides([enemyCollisionGroup, 
-            playerCollisionGroup]);
+            playerCollisionGroup,tilesCollisionGroup]);
+        eDino.getSprite().health = 1;
         enemyPool.push(eDino);
     }
     
