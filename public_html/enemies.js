@@ -14,6 +14,21 @@ function enemy(game, image, aImage, group)
     this.badGuy.body.collideWorldBounds = true;
     this.enemyCircle = new Phaser.Circle(game.world.centerX, 150,150);
     this.badGuy.health = 3;
+    
+    this.findUnoccupied = function(game) {
+        var x;
+        var y;
+        var blocked = this.badGuy.body.blocked;
+        while (blocked.up || blocked.down || blocked.left || blocked.right) {
+            
+            x = game.world.randomX;
+            y = game.world.randomY;
+            this.badGuy.x = x;
+            this.badGuy.y = y;
+        }
+    }
+    this.findUnoccupied(game);
+    
     this.update = function()
     {
         
@@ -46,4 +61,5 @@ function enemy(game, image, aImage, group)
     {
         return this.enemyCircle;
     }
+    
 }   
