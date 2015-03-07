@@ -45,6 +45,7 @@ function preload() {
     game.load.tilemap('tilemap_4_json', 'assets/tilemap_4.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('tilemap_5_json', 'assets/tilemap_5.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tiles', 'assets/Tiles.png');
+    game.load.audio('swipeSound', 'assets/swordswipe.ogg');
     
 }
 
@@ -88,7 +89,7 @@ function create() {
 // hmm
         
     playerCircle = new Phaser.Circle(50,50,120);
-    dinoPlayer = new player(game, 'dinoSelf','diamond');
+    dinoPlayer = new player(game, 'dinoSelf','diamond','swipeSound');
     dinoPlayer.getSprite().width = 30;
     dinoPlayer.getSprite().height = 100;
     dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
@@ -117,7 +118,6 @@ function create() {
         eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
         eDino.getSprite().body.collides([enemyCollisionGroup, 
             playerCollisionGroup]);
-        eDino.getSprite().health = 1;
         enemyPool.push(eDino);
     }
     
