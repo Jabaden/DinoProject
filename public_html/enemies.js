@@ -9,6 +9,8 @@ function enemy(game, image, aImage, group)
 {
     console.log("enemy being called");
     this.badGuy = group.create(game.world.randomX, game.world.randomY, image);
+    // bug: this doesn't change the body, only the sprite:
+    // this.badGuy.scale.set(.7);
     game.physics.p2.enable(this.badGuy,true);
     game.physics.enable(this.badGuy, Phaser.Physics.ARCADE);
     this.badGuy.body.collideWorldBounds = true;
@@ -18,6 +20,7 @@ function enemy(game, image, aImage, group)
     this.findUnoccupied = function(game, body) {
         var x;
         var y;
+        // bug: body.blocked is undefined; not sure why yet.
         var blocked = body.blocked;
         console.log("***" + body + ", " + blocked + "***");
         while (blocked.up || blocked.down || blocked.left || blocked.right) {
@@ -27,7 +30,7 @@ function enemy(game, image, aImage, group)
             this.badGuy.y = y;
         }
     };
-    this.findUnoccupied(game, this.badGuy.body);
+    //this.findUnoccupied(game, this.badGuy.body);
     
     this.update = function()
     {
