@@ -64,30 +64,17 @@ function create() {
     // uncomment to force a particular map (for debugging maybe)
     //map = game.add.tilemap('tilemap_0_json'); 
     map.addTilesetImage('Tiles', 'Tiles');
-    
-    //layer.resizeWorld();
-    // enumerate collidable tile indeces:
-    //map.setCollisionByExclusion([0]);
     bg_layer = map.createLayer(0);
     bg_layer.resizeWorld();
-
     map.setLayer(0);
+    
+    // enumerate collidable tile indeces:
     map.setCollisionBetween(2, 6, true, 0);
     map.setCollisionBetween(10, 11, true, 0);
     tileObjects = game.physics.p2.convertTilemap(map, bg_layer);
     //bg_layer.debug = true; // highlight collidable tiles
     game.physics.enable(bg_layer);
-
-    console.log(map.collideIndexes);
-
-
-//    map.setCollision( [5, 6, 12, 13, 31, 32, 33, 39, 40, 46, 47, 53, 54],
-//        true, 0, false );
-
     
-    
-// hmm
-        
     playerCircle = new Phaser.Circle(50,50,120);
     dinoPlayer = new player(game, 'dinoSelf','diamond','swipeSound');
     dinoPlayer.getSprite().width = 30;
@@ -152,8 +139,6 @@ function update() {
    ui.update(game,100,100,100,100,dinoPlayer);
    playerCircle.x = dinoPlayer.getX(); 
    playerCircle.y = dinoPlayer.getY(); 
-   //game.physics.arcade.collide(dinoPlayer.getSprite(), fAid , touching, null, this);
-   //game.physics.arcade.collide(dinoPlayer.getSprite(), uiColl, touching, null, this);
    //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
    //if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
    //{
