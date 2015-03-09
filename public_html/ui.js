@@ -1,12 +1,5 @@
-// ui stuff, trying to commit
 var ui = {
-    preload: function (game) {
-        game.load.image('healthBar', 'assets/healthBar.png');
-        game.load.image('vertBar', 'assets/vertBar.png');
-        game.load.image('vertBar2', 'assets/vertBar.png');
-        game.load.image('horiBar', 'assets/horiBar.png');
-        game.load.image('meteor', 'assets/meteor.png');
-    },
+    
     
     create: function (game) {
         uiColl = game.add.group();
@@ -48,8 +41,8 @@ var ui = {
         uiColl.add(meteor);
         
         healthBar = game.add.sprite(0, game.height / 2, 'healthBar');
-        healthBar.x = ((game.width / 2) - (healthBar.width / 2));
-        healthBar.y = ((game.height) - (healthBar.height));
+        healthBar.x = 0;
+        healthBar.y = 0;
         healthBar.cropEnabled = true;
         game.physics.arcade.enable(healthBar);
         healthBar.body.immovable = true;
@@ -64,10 +57,3 @@ var ui = {
         game.physics.arcade.collide(player, uiColl);
     }
 };
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-

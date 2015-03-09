@@ -37,6 +37,8 @@ function player(game, image, aImage, attackSound)
     dino.body.fixedRotation = true;
     swipe.body.kinematic = true;
     swipe.kill();
+    //pausing the game
+       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     
     
     // Dino Leveling Statistics
@@ -46,6 +48,9 @@ function player(game, image, aImage, attackSound)
     //swipe.body.fixedRotation = true;
     this.update = function ()
     {
+        if(pauseKey.isDown){
+            main.managePause();
+        }
 
         dino.body.setZeroVelocity();
         if (isAttacking == false) {

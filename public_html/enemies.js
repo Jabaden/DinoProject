@@ -1,10 +1,3 @@
-/*
- //* To change this license header, choose License Headers in Project Properties.
- //* To change this template file, choose Tools | Templates
- //* and open the template in the editor.
- */
-
-
 function enemy(game, image, aImage, group)
 {
     console.log("enemy being called");
@@ -22,7 +15,7 @@ function enemy(game, image, aImage, group)
         var y;
         // bug: body.blocked is undefined; not sure why yet.
         var blocked = body.blocked;
-        console.log("***" + body + ", " + blocked + "***");
+        console.log("***" + body + ", " + body.blocked + "***");
         while (blocked.up || blocked.down || blocked.left || blocked.right) {
             x = game.world.randomX;
             y = game.world.randomY;
