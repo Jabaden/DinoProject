@@ -182,12 +182,11 @@ function accelerateTo(sprite1, sprite2, speed)
 //body is the body you hit
 function directHit (body, shapeA, shapeB, equation) 
 {
-    console.log("direct hit!");
-    console.log(body.sprite.health);
     body.sprite.health -= 1;
     if(body.sprite.health <= 0)
     {
         body.sprite.kill();
+        dinoPlayer.addXP(2);
         for(var a = 0; a < enemyPool.length; a++)
         {
             if(enemyPool[a].getSprite().body === body)

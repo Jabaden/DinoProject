@@ -12,6 +12,10 @@ var rightFront = false;
 var isAttacking = false;
 var swipe;
 var playerXP = 0;
+var playerHealth = 5;
+var maxPlayerHealth = 5;
+var levelingXP = 1;
+var playerSpeed = 200;
 var aSound;
 function player(game, image, aImage, attackSound)
 {
@@ -33,6 +37,10 @@ function player(game, image, aImage, attackSound)
     dino.body.fixedRotation = true;
     swipe.body.kinematic = true;
     swipe.kill();
+    
+    
+    // Dino Leveling Statistics
+
 
     //swipe.revive();
     //swipe.body.fixedRotation = true;
@@ -50,7 +58,7 @@ function player(game, image, aImage, attackSound)
                 rightFront = false;
                 dino.body.angle = -90;
                 dino.angle = -90;
-                dino.body.moveLeft(200);
+                dino.body.moveLeft(playerSpeed);
             }
             else if (rightKey.isDown)
             {
@@ -61,7 +69,7 @@ function player(game, image, aImage, attackSound)
                 rightFront = true;
                 dino.body.angle = 90;
                 dino.angle = 90;
-                dino.body.moveRight(200);
+                dino.body.moveRight(playerSpeed);
             }
             if (upKey.isDown)
             {
@@ -72,7 +80,7 @@ function player(game, image, aImage, attackSound)
                 rightFront = false;
                 dino.body.angle = 0;
                 dino.angle = 0;
-                dino.body.moveUp(200);
+                dino.body.moveUp(playerSpeed);
             }
             else if (downKey.isDown)
             {
@@ -83,7 +91,7 @@ function player(game, image, aImage, attackSound)
                 rightFront = false;
                 dino.body.angle = 180;
                 dino.angle = 180;
-                dino.body.moveDown(200);
+                dino.body.moveDown(playerSpeed);
             }
             if (spaceKey.isDown && isAttacking == false)
             {
@@ -162,7 +170,14 @@ function player(game, image, aImage, attackSound)
                 game.time.events.add(300, attackAgain, this);
                 game.time.events.add(300, swipe.kill, swipe);
             }
-
+            
+        }
+        if (playerXP > levelingXP){ // Leveling up the dinosaur
+            console.log("Level up!");
+            levelingXP = Math.floor(levelingXP*2.5);
+            dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
+            dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
+            dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
     };
     function attackAgain()
@@ -190,12 +205,30 @@ function player(game, image, aImage, attackSound)
         return swipe;
     };
 
-    this.setXP = function (xp) {
-        playerXP = xp;
+    this.addXP = function (xp) {
+        playerXP += xp;
     };
 
     this.getXP = function () {
         return playerXP;
+    };
+    this.getSpeed = function () {
+        return playerSpeed;
+    };
+    this.setSpeed = function(speed) {
+        playerSpeed = speed;
+    };
+    this.getHealth = function () {
+        return playerHealth;
+    };
+    this.setHealth = function (health) {
+        playerHealth = health;
+    };
+    this.getMaxHealth = function () {
+        return maxPlayerHealth;
+    };
+    this.setMaxHealth = function (health) {
+        maxPlayerHealth = health;
     };
 }
 
