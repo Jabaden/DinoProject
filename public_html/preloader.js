@@ -32,6 +32,10 @@ var preloader = {
             game.load.image('quit', 'assets/quit.png');
             game.load.image('pause', 'assets/pause-back.png');
             
+            // Loading music
+            game.load.audio('menuMusic', 'assets/Extinction Menu Music.ogg');
+            game.load.audio('pauseMusic', 'assets/Extinction Pause Music.ogg');
+            
         },
         create: function(){
             game.state.start('mainMenu');

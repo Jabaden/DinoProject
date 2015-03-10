@@ -10,8 +10,11 @@ var mainMenu = {
       var play = game.add.sprite(50, 500, 'play');
       play.inputEnabled = true;
       play.events.onInputDown.add(this.startGame, this);
+      menuMusic = game.add.audio('menuMusic');
+      menuMusic.play('',0,1,true);
   },
   startGame: function(){
+      menuMusic.stop()
       game.state.start('main');
   }
 };

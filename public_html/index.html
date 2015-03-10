@@ -17,7 +17,8 @@
     </style>
 </head>
 <body>
-
+<audio id ="pauseMusic" src="assets/Extinction Pause Music.ogg" preload = "auto"></audio>
+    
     
 <script type="text/javascript">
 //initializes a game
@@ -37,6 +38,12 @@ var enemyCollisionGroup;
 var baddies;
 var enemyPool;
 var pauseKey;
+
+var pauseMusic = new Audio('assets/Extinction Pause Music.ogg');
+pauseMusic.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
  
 
 game.state.add('preloader',preloader);
@@ -49,7 +56,7 @@ var main = {
     
     
     create: function() {
-        
+
         enemyPool = [];
         // load the testing jungle map:
         //map = game.add.tilemap('map_json');
@@ -174,6 +181,8 @@ var main = {
     },
     managePause: function(){
         // When the pause button is pressed, we pause the game
+        pauseMusic.play();
+
         game.paused = true;
         // Then add the menu
         menu = game.add.sprite(0,0, 'pause');
@@ -196,7 +205,6 @@ var main = {
             var restartX1 = 290, restartY1 = 120, restartX2 = 508, restartY2 = 57;
             //the quit sprites bounds
             var quitX1 = 320, quitY1 = 210, quitX2 = 458, quitY2 = 71;            
-            
             //test if click is in resume
             if(event.x > resumeX1 && event.x < resumeX2 && event.y > resumeY1 && event.y < resumeY2 ){
                 console.log(7);
@@ -204,6 +212,8 @@ var main = {
                 resume.destroy();
                 restart.destroy();
                 quit.destroy();
+                pauseMusic.currentTime = 0;
+                pauseMusic.pause();
                 // Unpause the game
                 game.paused = false;
             }else if(event.x > restartX1 && event.x < restartX2 && event.y > restartY1 && event.y < restartY2 ){
