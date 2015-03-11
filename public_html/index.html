@@ -58,17 +58,13 @@ var main = {
     create: function() {
 
         enemyPool = [];
-        // load the testing jungle map:
-        //map = game.add.tilemap('map_json');
-        //map.addTilesetImage('Jungle_04', 'testTiles');
+
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.stage.backgroundColor = '#000000';
 
         //choose a random map indexed [0, 1, ..., 5]:
         var map_index = Math.floor( Math.random()*6 );
         map = game.add.tilemap('tilemap_' + map_index + '_json');
-        // uncomment to force a particular map (for debugging maybe)
-        //map = game.add.tilemap('tilemap_0_json'); 
         map.addTilesetImage('Tiles', 'Tiles');
         bg_layer = map.createLayer(0);
         bg_layer.resizeWorld();
