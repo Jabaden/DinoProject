@@ -110,37 +110,13 @@ var main = {
                 playerCollisionGroup,tilesCollisionGroup]);
             enemyPool.push(eDino);
             while (map.getTile(Math.floor(eDino.getX()/40), 
-                    Math.floor(eDino.getY()/40), bg_layer, true ).index !== 1) {
-                console.log("finding new position: (" +
-                        Math.floor(eDino.getX()/40) + ", " +
-                        Math.floor(eDino.getY()/40) + ") " +
-                        "collided w/ a wall.");
+                    Math.floor(eDino.getY()/40), 
+                    bg_layer, true).index !== 1) {
                 eDino.findNewPos();
-                
             }
-            /*
-            map.forEach( function(tile) {
             
-                if (tile.worldX <= eDino.getX()
-                     && tile.worldX + tile.width >= eDino.getX()
-                     && tile.worldY <= eDino.getY()
-                     && tile.worldY + tile.height >= eDino.getY()) {
-                    console.log (" tile {" + tile.worldX + ", " + tile.worldY + "}"
-                            + " contains dino {" + eDino.getX() + ", " + eDino.getY() + "}");
-                    eDino.findNewPos();
-                }
-            
-        }, this, 0, 0, map.width, map.height);
-             */
         }
         
-        /*
-        var i = 0;
-        for (tile in map.tiles){
-            console.log( "i: " + i);
-            i = i+1;
-        }
-        */
         dinoPlayer.getSprite().body.setCollisionGroup(playerCollisionGroup);
         dinoPlayer.getAttack().body.setCollisionGroup(playerCollisionGroup);
         dinoPlayer.getSprite().body.collides(enemyCollisionGroup);
@@ -153,7 +129,7 @@ var main = {
     },
     update: function() {
         
-       dinoPlayer.update();
+       dinoPlayer.update(map, bg_layer);
        for(var r = 0; r < enemyPool.length; r++)
        {
            enemyPool[r].circleUpdate();

@@ -46,12 +46,22 @@ function player(game, image, aImage, attackSound)
 
     //swipe.revive();
     //swipe.body.fixedRotation = true;
-    this.update = function ()
-    {
+    this.update = function (map, bg_layer)
+    {   
+        //check for overlap w/ shrubs:
+        var currentTile = map.getTile(Math.floor(dino.x/40),
+            Math.floor(dino.y/40), bg_layer, true);
+        if (currentTile.index == 7 || currentTile.index == 9){
+            console.log("colliding w/ shrub index #" + currentTile.index);
+            map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
+            map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
+        }
+            
+
         if(pauseKey.isDown){
             main.managePause();
         }
-
+        
         dino.body.setZeroVelocity();
         if (isAttacking == false) {
             if (leftKey.isDown)
