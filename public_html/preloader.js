@@ -11,8 +11,6 @@ var preloader = {
             game.load.image('diamond', 'assets/diamond.png');
             game.load.image('background', 'assets/Main-Menu.png');
             game.load.image('play', 'assets/play.png');
-            //game.load.tilemap('map_json', 'assets/test_jungle_40x40_buffer.json', null, Phaser.Tilemap.TILED_JSON);
-            //game.load.image('testTiles', 'assets/Jungle_04.png');
             game.load.tilemap('tilemap_0_json', 'assets/tilemap_0.json', null, Phaser.Tilemap.TILED_JSON);
             game.load.tilemap('tilemap_1_json', 'assets/tilemap_1.json', null, Phaser.Tilemap.TILED_JSON);
             game.load.tilemap('tilemap_2_json', 'assets/tilemap_2.json', null, Phaser.Tilemap.TILED_JSON);
@@ -40,4 +38,4 @@ var preloader = {
         create: function(){
             game.state.start('mainMenu');
         }
-        };
+    };
