@@ -109,6 +109,7 @@ var main = {
             eDino.getSprite().body.collides([enemyCollisionGroup, 
                 playerCollisionGroup,tilesCollisionGroup]);
             enemyPool.push(eDino);
+            // bug: checking this loop condition occasionally crashes, w/ a complaing about a null reference.
             while (map.getTile(Math.floor(eDino.getX()/40), 
                     Math.floor(eDino.getY()/40), 
                     bg_layer, true).index !== 1) {
