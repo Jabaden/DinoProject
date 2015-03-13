@@ -21,7 +21,9 @@ function enemy(game, image, aImage, group)
     this.badGuy.body.width = 30 + (this.sizeModifier * 10);
     this.badGuy.body.height = 30 + (this.sizeModifier * 10);
 
-    this.enemyCircle = new Phaser.Circle(game.world.centerX, 125, 125);
+    this.enemyCircle = new Phaser.Circle(game.world.centerX, 
+        100 + Math.floor(this.badGuy.width*1.5), 
+        100 + Math.floor(this.badGuy.width*1.5) );
     this.attackCircle = new Phaser.Circle(game.world.centerX, 
         20 + Math.floor(this.badGuy.width*1.5), 
         20 + Math.floor(this.badGuy.width*1.5) );

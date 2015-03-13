@@ -201,7 +201,9 @@ var level_0 = {
            //accelerateTo(badDino.getSprite(), dinoPlayer.getSprite(),60);
            //enemyAlert = true;
        //}
-       
+        /*
+        // this is supposed to make it so that you cant walk thru walls, but it
+        // seems to cause more problems than it fixes. removed for now. - brett
        if (dinoPlayer.getX() <= 80 || dinoPlayer.getX() >= 720 
                     || dinoPlayer.getY() <= 0 || dinoPlayer.getY() >= 520 
                     || map.getTile(Math.floor(dinoPlayer.getX()/40), 
@@ -209,8 +211,9 @@ var level_0 = {
                         bg_layer, true).index !== 1) {
                 dinoPlayer.findNewPos();
                 console.log("whoops, looks like ya walked thru a wall there!");
-            }
-       
+        }
+       */
+      
         if (transition)
             game.state.start('level_0'); 
       },
