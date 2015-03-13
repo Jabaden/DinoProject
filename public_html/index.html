@@ -65,8 +65,7 @@ var level_0 = {
         game.stage.backgroundColor = '#000000';
 
         //choose a random map indexed [0, 1, ..., 5]:
-        //var map_index = Math.floor( Math.random()*6 );
-        var map_index = 0;
+        var map_index = Math.floor( Math.random()*6 );
         map = game.add.tilemap('tilemap_' + map_index + '_json');
         map.addTilesetImage('Tiles', 'Tiles');
         bg_layer = map.createLayer(0);
@@ -195,7 +194,7 @@ var level_0 = {
        //}
        
         if (transition)
-            game.state.start('level_1', false, false); 
+            game.state.start('level_0'); 
       },
     render: function()
     {
@@ -276,233 +275,10 @@ var level_0 = {
    
 };
 
-var level_1 = {
-    
-    create: function() {
-
-        enemyPool = [];
-
-        game.physics.startSystem(Phaser.Physics.P2JS);
-        game.stage.backgroundColor = '#000000';
-
-        //choose a random map indexed [0, 1, ..., 5]:
-        //var map_index = Math.floor( Math.random()*6 );
-        var map_index = 1;
-        map = game.add.tilemap('tilemap_' + map_index + '_json');
-        map.addTilesetImage('Tiles', 'Tiles');
-        bg_layer = map.createLayer(0);
-        bg_layer.resizeWorld();
-        map.setLayer(0);
-
-        // enumerate collidable tile indeces:
-        map.setCollisionBetween(2, 6, true, 0);
-        map.setCollisionBetween(10, 11, true, 0);
-        tileObjects = game.physics.p2.convertTilemap(map, bg_layer);
-        //bg_layer.debug = true; // highlight collidable tiles
-        game.physics.enable(bg_layer);
-
-        playerCircle = new Phaser.Circle(50,50,115);
-        dinoPlayer = new player(game, 'dinoSelf', 'playerAttackAni',
-            'swipeSound');
-        dinoPlayer.getSprite().width = 25;
-        dinoPlayer.getSprite().height = 60;
-        dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
-        // game.physics.enable(map, Phaser.Physics.ARCADE);
-        game.physics.p2.setImpactEvents(true);
-        playerCollisionGroup = game.physics.p2.createCollisionGroup();
-        enemyCollisionGroup = game.physics.p2.createCollisionGroup();
-        tilesCollisionGroup = game.physics.p2.createCollisionGroup();
-        game.physics.p2.updateBoundsCollisionGroup();
-        ui.create(game);
-        //game.physics.enable(uiColl,Phaser.Physics.P2JS);
-        game.physics.p2.restitution = 0.1;
-        baddies = game.add.group();
-        baddies.enableBody = true;
-        baddies.physicsBodyType = Phaser.Physics.P2JS;
-
-        for (var i = 0; i < tileObjects.length; i++) {
-            var tileBody = tileObjects[i];
-            tileBody.setCollisionGroup(tilesCollisionGroup);
-            tileBody.collides(playerCollisionGroup);
-            tileBody.collides(enemyCollisionGroup);
-        }
-        //HARDCODING 2-5 DINOS
-        for (var i = 0; i < Math.floor(Math.random()*4 + 2); i++)
-        {
-            var dinoSpriteName = enemySprites[Math.floor(Math.random()*4 ) ];
-            var eDino = new enemy(game, dinoSpriteName, 'playerAttackAni', baddies);
-            eDino.getSprite().body.setRectangleFromSprite(eDino.getSprite());
-            eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
-            eDino.getSprite().body.collides([enemyCollisionGroup, 
-                playerCollisionGroup,tilesCollisionGroup]);
-            eDino.getEnemyAttack().body.setCollisionGroup(enemyCollisionGroup);
-            eDino.getEnemyAttack().body.collides(playerCollisionGroup);
-            enemyPool.push(eDino);
-            
-            while (eDino.getX() <= 80 || eDino.getX() >= 720 
-                    || eDino.getY() <= 0 || eDino.getY() >= 520 
-                    || map.getTile(Math.floor(eDino.getX()/40), 
-                        Math.floor(eDino.getY()/40), 
-                        bg_layer, true).index !== 1) {
-                eDino.findNewPos();
-            }
-            
-        }
-        for (var c = 0; c < enemyPool.size; c++)
-        {
-            enemyPool[c].getEnemyAttack().body.onBeginContact.add(this.attackPlayer, this);
-        }
-        dinoPlayer.getSprite().body.setCollisionGroup(playerCollisionGroup);
-        dinoPlayer.getAttack().body.setCollisionGroup(playerCollisionGroup);
-        dinoPlayer.getSprite().body.collides(enemyCollisionGroup);
-        dinoPlayer.getAttack().body.collides(enemyCollisionGroup);
-        dinoPlayer.getSprite().body.collides(tilesCollisionGroup);
-        dinoPlayer.getAttack().body.onBeginContact.add(this.directHit, this);
-        
-        
-       
-        
-    },
-    update: function() {
-        
-       var transition = dinoPlayer.update(map, bg_layer);
-       for(var r = 0; r < enemyPool.length; r++)
-       {
-           enemyPool[r].circleUpdate();
-       }
-       for(var l = 0; l < enemyPool.length; l++)
-       {
-           if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getCircle()) === true || enemyAlert === true)
-           {
-               enemyAlert = true;
-               for(var q = 0; q < enemyPool.length; q++)
-               {
-                   this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(), 60);
-               }
-
-           }
-           if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getACircle()) === true)
-           {
-//               console.log(enemyPool[l].queryAttack());
-               if(enemyPool[l].queryAttack() == true)
-               {
-                    enemyPool[l].getEnemyAttack().revive();
-                    enemyPool[l].getEnemyAttack().animations.stop(true);
-                    enemyPool[l].getEnemyAttack().animations.play('attackSwipe', 10, true);
-                    enemyPool[l].getEnemyAttack().x = dinoPlayer.getX();
-                    enemyPool[l].getEnemyAttack().y = dinoPlayer.getY();
-                    enemyPool[l].getEnemyAttack().body.x = dinoPlayer.getX();
-                    enemyPool[l].getEnemyAttack().body.y = dinoPlayer.getY();
-                    /*enemyPool[l].getEnemyAttack().angle = enemyPool[l].rotation;
-                    enemyPool[l].getEnemyAttack().angle = enemyPool[l].rotation;
-                    enemyPool[l].getEnemyAttack().body.angle = enemyPool[l].rotation;
-                    enemyPool[l].getEnemyAttack().body.angle = enemyPool[l].rotation;*/
-                    enemyPool[l].cannotAttack();
-                    game.time.events.add(500, enemyPool[l].canAttack, enemyPool[l]);
-                    game.time.events.add(300, enemyPool[l].killAttack, enemyPool[l]);
-                    console.log("im attacking you!");
-                }
-           }
-       }
-
-       ui.update(game,100,100,100,100,dinoPlayer);
-       playerCircle.x = dinoPlayer.getX(); 
-       playerCircle.y = dinoPlayer.getY(); 
-       //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
-       //if(Phaser.Circle.intersects(playerCircle,enemyCircle) == true || enemyAlert == true)
-       //{
-           //accelerateTo(badDino.getSprite(), dinoPlayer.getSprite(),60);
-           //enemyAlert = true;
-       //}
-       
-       if (transition)
-           game.state.start('level_0', false, false);
-        
-      },
-    render: function()
-    {
-        for(var j = 0; j < enemyPool.length; j++)
-        {
-           enemyPool[j].circleRender();
-        }
-        game.debug.geom(playerCircle,'#cfffff', false);
-        game.debug.bodyInfo(dinoPlayer.getSprite(), 32, 32);
-        game.debug.body(dinoPlayer.getSprite());
-        //game.debug.body(badDino);
-    },
-    accelerateTo: function(sprite1, sprite2, speed)    {
-        if(typeof speed === 'undefined')
-        {
-            speed = 60;
-        }
-        var angle = Math.atan2(sprite2.y - sprite1.y, sprite2.x - sprite1.x);
-        sprite1.body.rotation = angle + game.math.degToRad(90);
-        //might want to try velocity or whatever its called
-        sprite1.body.velocity.x = Math.cos(angle) * speed/2;
-        sprite1.body.velocity.y = Math.sin(angle) * speed/2;
-    },
-    managePause: function(){
-       // When the pause button is pressed, we pause the game
-        pauseMusic.play();
-        game.paused = true;
-        // Then add the menu
-        menu = game.add.sprite(0,0, 'pause');
-        // Add a input listener that can help us return from being paused
-        game.input.onDown.add(this.unpause, self);
-    },
-        // And finally the method that handels the pause menu
-    unpause: function(event){
-        // Only act if paused
-        if(game.paused){
-            console.log(7);
-            menu.destroy();
-            pauseMusic.currentTime = 0;
-            pauseMusic.pause();
-            // Unpause the game
-            game.paused = false;
-        }
-    },
-    /*function touching(player,other)
-    {
-        console.log("hi there");
-        game.stage.backgroundColor = '#992d2d';
-    }*/
-    //body is the body you hit
-    directHit: function(body, shapeA, shapeB, equation) 
-    {
-        console.log("direct hit!");
-        console.log(body.sprite.health);
-        body.sprite.health -= 1;
-        if(body.sprite.health <= 0)
-        {
-            body.sprite.kill();
-            dinoPlayer.addXP(2);
-            for(var a = 0; a < enemyPool.length; a++)
-            {
-                if(enemyPool[a].getSprite().body === body)
-                {
-                   enemyPool.splice(a, 1);
-                }
-            }
-        }
-    },
-    //THIS IS WHAT HAPPENS WHEN THE MONSTERS ATTACK HITS YOU, MANIPULATE STUFF 
-    attackPlayer: function(body, shapeA, shapeB, equation) 
-    {
-        console.log("SMACK YO FACE");
-    },
-    attackAgain: function()
-    {
-        enemyCanAttack = true;
-    }
-   
-};
-
 game.state.add('boot',boot);
 game.state.add('mainMenu', mainMenu);
 game.state.add('preloader',preloader);
 game.state.add('level_0', level_0);
-game.state.add('level_1', level_1);
 game.state.add('end',end);
 game.state.start('boot');
 </script>
