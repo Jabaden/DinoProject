@@ -21,6 +21,7 @@ var preloader = {
             game.load.tilemap('tilemap_5_json', 'assets/tilemap_5.json', null, Phaser.Tilemap.TILED_JSON);
             game.load.image('Tiles', 'assets/Tiles.png');
             game.load.audio('swipeSound', 'assets/swordswipe.ogg');
+            game.load.audio('enemySwipe', 'assets/enemySwipe.ogg');
             game.load.spritesheet('playerAttackAni', 'assets/attack.png', 60, 10, 3);
             game.load.image('healthBar', 'assets/healthBar.png');
             game.load.spritesheet('playerPic','assets/health-mood.png',65,65,3,0,10);

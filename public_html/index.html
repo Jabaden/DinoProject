@@ -50,6 +50,7 @@ pauseMusic.addEventListener('ended', function() {
 }, false);
 var totalTime = 180;
 var timeLeft = totalTime;
+var enemySmack;
  
 
 /* not sure why these lines were here as well as the bottom; commented out.
@@ -90,7 +91,7 @@ var level_0 = {
         dinoPlayer.getSprite().width = playerWidth;
         dinoPlayer.getSprite().height = playerHeight;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
-        playerCircle = new Phaser.Circle(50, 50, 115);
+        playerCircle = new Phaser.Circle(50, 50, 100);
         
         game.physics.p2.setImpactEvents(true);
         playerCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -104,7 +105,7 @@ var level_0 = {
         baddies.enableBody = true;
         baddies.physicsBodyType = Phaser.Physics.P2JS;
         enemyAlert = false; 
-        
+        enemySmack = game.add.audio('enemySwipe');
         for (var i = 0; i < tileObjects.length; i++) {
             var tileBody = tileObjects[i];
             tileBody.setCollisionGroup(tilesCollisionGroup);
@@ -191,6 +192,7 @@ var level_0 = {
                     dinoPlayer.setHealth(dinoPlayer.getHealth() 
                             - (1 + Math.floor(0.5 * enemyPool[l].sizeModifier) ) );
                     console.log("hp left: " + dinoPlayer.getHealth() );
+                    enemySmack.play();
                 }
            }
        }
