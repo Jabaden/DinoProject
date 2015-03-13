@@ -124,12 +124,12 @@ var level_0 = {
             eDino.getEnemyAttack().body.setCollisionGroup(enemyCollisionGroup);
             eDino.getEnemyAttack().body.collides(playerCollisionGroup);
             enemyPool.push(eDino);
-            
             while (eDino.getX() <= 80 || eDino.getX() >= 720 
                     || eDino.getY() <= 0 || eDino.getY() >= 520 
                     || map.getTile(Math.floor(eDino.getX()/40), 
                         Math.floor(eDino.getY()/40), 
-                        bg_layer, true).index !== 1) {
+                        bg_layer, true).index !== 1
+                    || Phaser.Circle.intersects(playerCircle, eDino.getCircle() ) ) {
                 eDino.findNewPos();
             }
             
