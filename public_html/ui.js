@@ -41,12 +41,15 @@ var ui = {
         uiColl.add(meteor);
         
         healthBar = game.add.sprite(0, game.height / 2, 'healthBar');
-        healthBar.x = 0;
-        healthBar.y = 0;
+        healthBar.x = 5;
+        healthBar.y = 5;
         healthBar.cropEnabled = true;
         game.physics.arcade.enable(healthBar);
         healthBar.body.immovable = true;
         uiColl.add(healthBar);
+        
+        playerPic = game.add.sprite(7,7,'playerPic',0);
+        
     },
     
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.

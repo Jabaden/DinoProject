@@ -48,15 +48,16 @@ function player(game, image, aImage, attackSound)
     
     
     //pausing the game
-    pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
-    
+       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+       restartKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+       quitKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
     
     // Dino Leveling Statistics
 
 
     //swipe.revive();
     //swipe.body.fixedRotation = true;
-    this.update = function (map, bg_layer)
+     this.update = function (map, bg_layer)
     {   
         var transition = false;
         
@@ -94,6 +95,12 @@ function player(game, image, aImage, attackSound)
 
         if(pauseKey.isDown){
             level_0.managePause();
+        }
+        if(restartKey.isDown){
+            game.state.start('level_0');
+        }
+        if(quitKey.isDown){
+            game.state.start('mainMenu');
         }
         
         dino.body.setZeroVelocity();
@@ -151,6 +158,9 @@ function player(game, image, aImage, attackSound)
                     swipe.body.y = dino.y;
                     swipe.angle = -90;
                     swipe.body.angle = -90;
+                    //testing end screens
+                    endValue = false;
+                    game.state.start('end');
                 }
                 else if (rightKey.isDown)
                 {
@@ -228,7 +238,6 @@ function player(game, image, aImage, attackSound)
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
-        
         return transition;
     };
     function attackAgain()
