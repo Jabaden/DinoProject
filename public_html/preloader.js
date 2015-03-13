@@ -7,7 +7,10 @@ var preloader = {
     preload: function() {
             //ui.preload(game);
             game.load.image('dinoSelf', 'assets/Dino.png');
-            game.load.image('dinoBG', 'assets/enemy-tri.png');
+            game.load.image('dinoTri', 'assets/enemy-tri.png');
+            game.load.image('dinoAnk', 'assets/enemy-ank.png');
+            game.load.image('dinoSteg', 'assets/enemy-steg.png');
+            game.load.image('dinoVel', 'assets/enemy-vel.png');
             game.load.image('diamond', 'assets/diamond.png');
             game.load.image('background', 'assets/Main-Menu.png');
             game.load.image('play', 'assets/play.png');
