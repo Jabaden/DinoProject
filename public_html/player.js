@@ -159,8 +159,7 @@ function player(game, image, aImage, attackSound)
                     swipe.body.angle = -90;
                     //testing end screens(false to lose, true to win)
                     console.log('false');
-                    endValue = false;
-                    game.state.start('end');
+
                 }
                 else if (rightKey.isDown)
                 {
