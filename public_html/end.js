@@ -27,6 +27,7 @@ var end = {
                 maxPlayerHealth = 20;
                 levelingXP = 1;
                 playerSpeed = 200;
+                timeLeft = totalTime
                 game.state.start('mainMenu');
             }
         }
@@ -43,6 +44,7 @@ var end = {
                 maxPlayerHealth = 20;
                 levelingXP = 1;
                 playerSpeed = 200;
+                timeLeft = totalTime
                 game.state.start('mainMenu');
             }
         }
