@@ -21,7 +21,6 @@ var playerSpeed = 200;
 var aSound;
 var endValue;
 var fromDir = 'S';
-var prevTile = {x:0, y:0}; 
 
 function player(game, image, aImage, attackSound)
 {
@@ -35,8 +34,7 @@ function player(game, image, aImage, attackSound)
     
     var x = fromDir == 'W' ? 150 : fromDir == 'E' ? 630 : 380;
     var y = fromDir == 'N' ?  80 : fromDir == 'S' ? 440 : 260;
-    prevTile.x = Math.floor(x/40);
-    prevTile.y = Math.floor(y/40);
+    
     dino = game.add.sprite(x, y, image);
     
     swipe = game.add.sprite(250, 250, aImage);
@@ -63,9 +61,6 @@ function player(game, image, aImage, attackSound)
      this.update = function (map, bg_layer)
     {   
         var transition = false; // set to true to jump to a new map.
-        
-        prevTile.x = Math.floor(x/40);
-        prevTile.y = Math.floor(y/40);
         
          //check for overlap w/ shrubs:
         var currentTile = map.getTile(Math.floor(dino.x/40),
@@ -252,6 +247,8 @@ function player(game, image, aImage, attackSound)
             
             levelingXP = Math.floor(levelingXP*2.5);
             console.log("Level up! Need " + levelingXP + " for next level.");
+            //dino.width = Math.floor(dino.width * .9);
+            //dino.height = Math.floor(dino.height * .9);
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());

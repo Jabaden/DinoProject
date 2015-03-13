@@ -30,6 +30,8 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, ''); //{ preload: preload, cre
 //var extinction = {};
 var circle;
 var dinoPlayer;
+var playerHeight = 60;
+var playerWidth = 25;
 //var badDino;
 var playerCircle;
 var enemyAlert = false;
@@ -82,12 +84,13 @@ var level_0 = {
         bg_layer.debug = false; // highlight collidable tiles
         game.physics.enable(bg_layer);
 
-        playerCircle = new Phaser.Circle(50,50,115);
+        
         dinoPlayer = new player(game, 'dinoSelf', 'playerAttackAni', 
             'swipeSound');
-        dinoPlayer.getSprite().width = 25;
-        dinoPlayer.getSprite().height = 60;
+        dinoPlayer.getSprite().width = playerWidth;
+        dinoPlayer.getSprite().height = playerHeight;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
+        playerCircle = new Phaser.Circle(50, 50, 115);
         
         game.physics.p2.setImpactEvents(true);
         playerCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -160,7 +163,7 @@ var level_0 = {
                for(var q = 0; q < enemyPool.length; q++)
                {
                     this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(),
-                        80 - enemyPool[q].sizeModifier * 12 );
+                        80 - enemyPool[q].sizeModifier * 8 );
                }
 
            }

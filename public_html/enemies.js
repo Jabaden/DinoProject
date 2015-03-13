@@ -114,7 +114,4 @@ function enemy(game, image, aImage, group)
     this.getSizeModifier = function() {
         return this.sizeModifer;
     }
-    this.getXP = function() {
-        return 2 + this.sizeModifier;
-    }
 }   
