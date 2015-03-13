@@ -55,6 +55,7 @@ function player(game, image, aImage, attackSound)
             console.log("colliding w/ shrub index #" + currentTile.index);
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
+            playerXP += 1;
         }
             
 
