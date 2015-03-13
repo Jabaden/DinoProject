@@ -38,6 +38,7 @@ var enemyCollisionGroup;
 var baddies;
 var enemyPool;
 var pauseKey;
+var enemyCanAttack = true;
 
 var pauseMusic = new Audio('assets/Extinction Pause Music.ogg');
 pauseMusic.addEventListener('ended', function() {
@@ -77,10 +78,10 @@ var main = {
         //bg_layer.debug = true; // highlight collidable tiles
         game.physics.enable(bg_layer);
 
-        playerCircle = new Phaser.Circle(50,50,120);
+        playerCircle = new Phaser.Circle(50,50,115);
         dinoPlayer = new player(game, 'dinoSelf','playerAttackAni','swipeSound');
         dinoPlayer.getSprite().width = 30;
-        dinoPlayer.getSprite().height = 100;
+        dinoPlayer.getSprite().height = 50;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
         // game.physics.enable(map, Phaser.Physics.ARCADE);
         game.physics.p2.setImpactEvents(true);
@@ -101,13 +102,16 @@ var main = {
             tileBody.collides(playerCollisionGroup);
             tileBody.collides(enemyCollisionGroup);
         }
-
+        //HARDCODING 4 DINOS
         for (var i = 0; i < 4; i++)
         {
-            var eDino = new enemy(game, 'dinoBG', 'diamond', baddies);
+            var eDino = new enemy(game, 'dinoBG', 'playerAttackAni', baddies);
+            eDino.getSprite().body.setRectangleFromSprite(eDino.getSprite());
             eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
             eDino.getSprite().body.collides([enemyCollisionGroup, 
                 playerCollisionGroup,tilesCollisionGroup]);
+            eDino.getEnemyAttack().body.setCollisionGroup(enemyCollisionGroup);
+            eDino.getEnemyAttack().body.collides(playerCollisionGroup);
             enemyPool.push(eDino);
             
             // bug: checking this loop condition occasionally crashes, w/ a complaing about a null reference.
@@ -118,13 +122,17 @@ var main = {
             }
             
         }
-        
+        for (var c = 0; c < 4; c++)
+        {
+            enemyPool[c].getEnemyAttack().body.onBeginContact.add(this.attackPlayer, this);
+        }
         dinoPlayer.getSprite().body.setCollisionGroup(playerCollisionGroup);
         dinoPlayer.getAttack().body.setCollisionGroup(playerCollisionGroup);
         dinoPlayer.getSprite().body.collides(enemyCollisionGroup);
         dinoPlayer.getAttack().body.collides(enemyCollisionGroup);
         dinoPlayer.getSprite().body.collides(tilesCollisionGroup);
         dinoPlayer.getAttack().body.onBeginContact.add(this.directHit, this);
+        
         
        
         
@@ -146,6 +154,28 @@ var main = {
                    this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(), 60);
                }
 
+           }
+           if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getACircle()) === true)
+           {
+               console.log(enemyPool[l].queryAttack());
+               if(enemyPool[l].queryAttack() == true)
+               {
+                    enemyPool[l].getEnemyAttack().revive();
+                    enemyPool[l].getEnemyAttack().animations.stop(true);
+                    enemyPool[l].getEnemyAttack().animations.play('attackSwipe', 10, true);
+                    enemyPool[l].getEnemyAttack().x = dinoPlayer.getX();
+                    enemyPool[l].getEnemyAttack().y = dinoPlayer.getY();
+                    enemyPool[l].getEnemyAttack().body.x = dinoPlayer.getX();
+                    enemyPool[l].getEnemyAttack().body.y = dinoPlayer.getY();
+                    /*enemyPool[l].getEnemyAttack().angle = enemyPool[l].rotation;
+                    enemyPool[l].getEnemyAttack().angle = enemyPool[l].rotation;
+                    enemyPool[l].getEnemyAttack().body.angle = enemyPool[l].rotation;
+                    enemyPool[l].getEnemyAttack().body.angle = enemyPool[l].rotation;*/
+                    enemyPool[l].cannotAttack();
+                    game.time.events.add(500, enemyPool[l].canAttack, enemyPool[l]);
+                    game.time.events.add(50, enemyPool[l].killAttack, enemyPool[l]);
+                    console.log("im attacking you!");
+                }
            }
        }
 
@@ -252,6 +282,15 @@ var main = {
                 }
             }
         }
+    },
+    //THIS IS WHAT HAPPENS WHEN THE MONSTERS ATTACK HITS YOU, MANIPULATE STUFF 
+    attackPlayer: function(body, shapeA, shapeB, equation) 
+    {
+        console.log("SMACK YO FACE");
+    },
+    attackAgain: function()
+    {
+        enemyCanAttack = true;
     }
    
 };
