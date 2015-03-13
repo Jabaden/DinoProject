@@ -18,6 +18,7 @@ var maxPlayerHealth = 5;
 var levelingXP = 1;
 var playerSpeed = 200;
 var aSound;
+var endValue;
 function player(game, image, aImage, attackSound)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -144,6 +145,7 @@ function player(game, image, aImage, attackSound)
                     swipe.angle = -90;
                     swipe.body.angle = -90;
                     //testing end screens(false to lose, true to win)
+                    console.log('false');
                     endValue = false;
                     game.state.start('end');
                 }

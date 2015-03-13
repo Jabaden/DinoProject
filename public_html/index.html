@@ -9,6 +9,8 @@
         <script src="enemies.js"></script>
         <script src="preloader.js"></script>
         <script src="mainMenu.js"></script>
+        <script src="end.js"></script>
+        <script src="boot.js"></script>
         
     <style type="text/css">
         body {
@@ -37,7 +39,6 @@ var playerCollisionGroup;
 var enemyCollisionGroup;
 var baddies;
 var enemyPool;
-var pauseKey;
 var enemyCanAttack = true;
 var enemySprites = ['dinoTri', 'dinoVel', 'dinoAnk', 'dinoSteg'];
 var pauseMusic = new Audio('assets/Extinction Pause Music.ogg');
@@ -221,16 +222,9 @@ var level_0 = {
     managePause: function(){
         // When the pause button is pressed, we pause the game
         pauseMusic.play();
-
         game.paused = true;
         // Then add the menu
         menu = game.add.sprite(0,0, 'pause');
-        //unpause game
-        resume = game.add.sprite(300, 30, 'resume');
-        //restart sprite
-        restart = game.add.sprite(290, 120, 'restart');
-        //quit sprite
-        quit = game.add.sprite(320, 210, 'quit');
         // Add a input listener that can help us return from being paused
         game.input.onDown.add(this.unpause, self);
     },
@@ -238,30 +232,12 @@ var level_0 = {
     unpause: function(event){
         // Only act if paused
         if(game.paused){
-            //the resume sprites bounds
-            var resumeX1 = 300, resumeY1 = 30, resumeX2 = 484, resumeY2 = 82;
-            //the restart sprites bounds
-            var restartX1 = 290, restartY1 = 120, restartX2 = 508, restartY2 = 57;
-            //the quit sprites bounds
-            var quitX1 = 320, quitY1 = 210, quitX2 = 458, quitY2 = 71;            
-            //test if click is in resume
-            if(event.x > resumeX1 && event.x < resumeX2 && event.y > resumeY1 && event.y < resumeY2 ){
-                console.log(7);
-                menu.destroy();
-                resume.destroy();
-                restart.destroy();
-                quit.destroy();
-                pauseMusic.currentTime = 0;
-                pauseMusic.pause();
-                // Unpause the game
-                game.paused = false;
-            }else if(event.x > restartX1 && event.x < restartX2 && event.y > restartY1 && event.y < restartY2 ){
-                //restart the game
-                console.log("restart");
-            }else if(event.x > quitX1 && event.x < quitX2 && event.y > quitY1 && event.y < quitY2 ){
-                //quit to main menu
-                console.log("quit");
-            }
+            console.log(7);
+            menu.destroy();
+            pauseMusic.currentTime = 0;
+            pauseMusic.pause();
+            // Unpause the game
+            game.paused = false;
         }
     },
     /*function touching(player,other)
@@ -466,18 +442,11 @@ var level_1 = {
         sprite1.body.velocity.y = Math.sin(angle) * speed/2;
     },
     managePause: function(){
-        // When the pause button is pressed, we pause the game
+       // When the pause button is pressed, we pause the game
         pauseMusic.play();
-
         game.paused = true;
         // Then add the menu
         menu = game.add.sprite(0,0, 'pause');
-        //unpause game
-        resume = game.add.sprite(300, 30, 'resume');
-        //restart sprite
-        restart = game.add.sprite(290, 120, 'restart');
-        //quit sprite
-        quit = game.add.sprite(320, 210, 'quit');
         // Add a input listener that can help us return from being paused
         game.input.onDown.add(this.unpause, self);
     },
@@ -485,30 +454,12 @@ var level_1 = {
     unpause: function(event){
         // Only act if paused
         if(game.paused){
-            //the resume sprites bounds
-            var resumeX1 = 300, resumeY1 = 30, resumeX2 = 484, resumeY2 = 82;
-            //the restart sprites bounds
-            var restartX1 = 290, restartY1 = 120, restartX2 = 508, restartY2 = 57;
-            //the quit sprites bounds
-            var quitX1 = 320, quitY1 = 210, quitX2 = 458, quitY2 = 71;            
-            //test if click is in resume
-            if(event.x > resumeX1 && event.x < resumeX2 && event.y > resumeY1 && event.y < resumeY2 ){
-                console.log(7);
-                menu.destroy();
-                resume.destroy();
-                restart.destroy();
-                quit.destroy();
-                pauseMusic.currentTime = 0;
-                pauseMusic.pause();
-                // Unpause the game
-                game.paused = false;
-            }else if(event.x > restartX1 && event.x < restartX2 && event.y > restartY1 && event.y < restartY2 ){
-                //restart the game
-                console.log("restart");
-            }else if(event.x > quitX1 && event.x < quitX2 && event.y > quitY1 && event.y < quitY2 ){
-                //quit to main menu
-                console.log("quit");
-            }
+            console.log(7);
+            menu.destroy();
+            pauseMusic.currentTime = 0;
+            pauseMusic.pause();
+            // Unpause the game
+            game.paused = false;
         }
     },
     /*function touching(player,other)
@@ -547,11 +498,13 @@ var level_1 = {
    
 };
 
+game.state.add('boot',boot);
 game.state.add('mainMenu', mainMenu);
 game.state.add('preloader',preloader);
 game.state.add('level_0', level_0);
 game.state.add('level_1', level_1);
-game.state.start('preloader');
+game.state.add('end',end);
+game.state.start('boot');
 </script>
 </body>
 </html>
