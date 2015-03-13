@@ -246,6 +246,8 @@ function player(game, image, aImage, attackSound)
             
             levelingXP = Math.floor(levelingXP*2.5);
             console.log("Level up! Need " + levelingXP + " for next level.");
+            //dino.width = Math.floor(dino.width * .9);
+            //dino.height = Math.floor(dino.height * .9);
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
