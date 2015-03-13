@@ -48,6 +48,8 @@ function player(game, image, aImage, attackSound)
     //swipe.body.fixedRotation = true;
     this.update = function (map, bg_layer)
     {   
+        var transition = false;
+        
         //check for overlap w/ shrubs:
         var currentTile = map.getTile(Math.floor(dino.x/40),
             Math.floor(dino.y/40), bg_layer, true);
@@ -56,6 +58,17 @@ function player(game, image, aImage, attackSound)
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
             playerXP += 1;
+        }
+        else if (currentTile.index == 8) { // warp tile
+            if (currentTile.x == 2) 
+                console.log('go west');
+            if (currentTile.x == map.width-1) 
+                console.log('go east');    
+            if (currentTile.y == 0)
+                console.log('go north');
+            if (currentTile.y == map.height-1)
+                console.log('go south');
+            transition = true;
         }
             
 
@@ -195,6 +208,8 @@ function player(game, image, aImage, attackSound)
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
+        
+        return transition;
     };
     function attackAgain()
     {

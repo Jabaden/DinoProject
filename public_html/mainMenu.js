@@ -15,7 +15,7 @@ var mainMenu = {
   },
   startGame: function(){
       menuMusic.stop()
-      game.state.start('main');
+      game.state.start('level_0');
   }
 };
 
