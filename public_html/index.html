@@ -159,7 +159,8 @@ var level_0 = {
                enemyAlert = true;
                for(var q = 0; q < enemyPool.length; q++)
                {
-                   this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(), 60);
+                    this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(),
+                        80 - enemyPool[q].sizeModifier * 12 );
                }
 
            }
@@ -189,6 +190,7 @@ var level_0 = {
        
        // Win and lose conditions
        timeLeft = timeLeft - game.time.elapsed/1000;
+       //console.log(timeLeft);
        if (timeLeft < 0){
 
        }
@@ -206,16 +208,19 @@ var level_0 = {
            //accelerateTo(badDino.getSprite(), dinoPlayer.getSprite(),60);
            //enemyAlert = true;
        //}
-       
+        /*
+        // this is supposed to make it so that you cant walk thru walls, but it
+        // seems to cause more problems than it fixes. removed for now. - brett
        if (dinoPlayer.getX() <= 80 || dinoPlayer.getX() >= 720 
                     || dinoPlayer.getY() <= 0 || dinoPlayer.getY() >= 520 
                     || map.getTile(Math.floor(dinoPlayer.getX()/40), 
                         Math.floor(dinoPlayer.getY()/40), 
                         bg_layer, true).index !== 1) {
                 dinoPlayer.findNewPos();
-                console.log("spams");
-            }
-       
+                console.log("whoops, looks like ya walked thru a wall there!");
+        }
+       */
+      
         if (transition)
             game.state.start('level_0'); 
       },
@@ -271,12 +276,13 @@ var level_0 = {
     directHit: function(body, shapeA, shapeB, equation) 
     {
         console.log("direct hit!");
-        console.log(body.sprite.health);
         body.sprite.health -= 1;
+        console.log("mob HP: " + body.sprite.health);
         if(body.sprite.health <= 0)
         {
+            console.log("mob XP: " + body.sprite.XP);
             body.sprite.kill();
-            dinoPlayer.addXP(2);
+            dinoPlayer.addXP(body.sprite.XP);
             for(var a = 0; a < enemyPool.length; a++)
             {
                 if(enemyPool[a].getSprite().body === body)

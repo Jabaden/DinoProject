@@ -1,6 +1,8 @@
 
 function enemy(game, image, aImage, group)
 {
+    this.sizeModifier = Math.floor(Math.random()*5);
+    
     this.enemySwipe;
     this.attackAgain = true;
     console.log("enemy being called");
@@ -11,16 +13,23 @@ function enemy(game, image, aImage, group)
     game.physics.enable(this.badGuy, Phaser.Physics.ARCADE);
     
     this.badGuy.body.collideWorldBounds = true;
-    this.enemyCircle = new Phaser.Circle(game.world.centerX, 125,125);
-    this.attackCircle = new Phaser.Circle(game.world.centerX, 50,50);
+
+    this.badGuy.XP = Math.floor(2 + (2/3 * this.sizeModifier) );
+    this.badGuy.health = 2 + Math.floor(this.sizeModifier * 1.5);
+    this.badGuy.width = 30 + (this.sizeModifier * 10);
+    this.badGuy.height = 75 + (this.sizeModifier * 25);
+    this.badGuy.body.width = 30 + (this.sizeModifier * 10);
+    this.badGuy.body.height = 30 + (this.sizeModifier * 10);
+
+    this.enemyCircle = new Phaser.Circle(game.world.centerX, 
+        100 + Math.floor(this.badGuy.width*1.5), 
+        100 + Math.floor(this.badGuy.width*1.5) );
+    this.attackCircle = new Phaser.Circle(game.world.centerX, 
+        20 + Math.floor(this.badGuy.width*1.5), 
+        20 + Math.floor(this.badGuy.width*1.5) );
     this.enemySwipe = game.add.sprite(350,350,aImage);
     game.physics.p2.enable(this.enemySwipe, false);
     this.enemySwipe.animations.add('attackSwipe');
-    this.badGuy.health = 3;
-    this.badGuy.height = 75;
-    this.badGuy.body.height = 75;
-    this.badGuy.body.width = 30;
-    this.badGuy.width = 30;
     this.enemySwipe.body.kinematic = true;
     this.enemySwipe.kill();
     
@@ -102,6 +111,10 @@ function enemy(game, image, aImage, group)
     {
         return this.attackAgain;
     }
-    
-    
+    this.getSizeModifier = function() {
+        return this.sizeModifer;
+    }
+    this.getXP = function() {
+        return 2 + this.sizeModifier;
+    }
 }   

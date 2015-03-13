@@ -20,6 +20,7 @@ var playerSpeed = 200;
 var aSound;
 var endValue;
 var fromDir = 'S';
+var prevTile = {x:0, y:0}; 
 
 function player(game, image, aImage, attackSound)
 {
@@ -30,9 +31,13 @@ function player(game, image, aImage, attackSound)
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     aSound = game.add.audio(attackSound);
     //aSound.addMarker('testAttack', 1, 1.0);
+    
     var x = fromDir == 'W' ? 150 : fromDir == 'E' ? 630 : 380;
     var y = fromDir == 'N' ?  80 : fromDir == 'S' ? 440 : 260;
+    prevTile.x = Math.floor(x/40);
+    prevTile.y = Math.floor(y/40);
     dino = game.add.sprite(x, y, image);
+    
     swipe = game.add.sprite(250, 250, aImage);
     swipe.animations.add('attackSwipe');
     dino.animations.add('walk');
@@ -56,16 +61,19 @@ function player(game, image, aImage, attackSound)
     //swipe.body.fixedRotation = true;
      this.update = function (map, bg_layer)
     {   
-        var transition = false;
+        var transition = false; // set to true to jump to a new map.
         
-        //check for overlap w/ shrubs:
+        prevTile.x = Math.floor(x/40);
+        prevTile.y = Math.floor(y/40);
+        
+         //check for overlap w/ shrubs:
         var currentTile = map.getTile(Math.floor(dino.x/40),
             Math.floor(dino.y/40), bg_layer, true);
         if (currentTile.index == 7 || currentTile.index == 9){
-            console.log("colliding w/ shrub index #" + currentTile.index);
+            //console.log("colliding w/ shrub index #" + currentTile.index);
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
-            playerXP += 1;
+            this.addXP(1);
         }
         else if (currentTile.index == 8) { // warp tile
             if (currentTile.x == 2){ 
@@ -240,8 +248,9 @@ function player(game, image, aImage, attackSound)
                 
         }
         if (playerXP > levelingXP){ // Leveling up the dinosaur
-            console.log("Level up!");
+            
             levelingXP = Math.floor(levelingXP*2.5);
+            console.log("Level up! Need " + levelingXP + " for next level.");
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
@@ -276,8 +285,9 @@ function player(game, image, aImage, attackSound)
 
     this.addXP = function (xp) {
         playerXP += xp;
+        console.log("player's XP:" + playerXP );
     };
-
+    
     this.getXP = function () {
         return playerXP;
     };

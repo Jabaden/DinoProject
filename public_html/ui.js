@@ -32,6 +32,10 @@ var ui = {
         vertBar2.body.immovable = true;
         uiColl.add(vertBar2);
         
+        world = game.add.sprite(0, 0, 'world');
+        world.x = game.width - world.width;
+        world.y = game.height - world.height;
+        
         meteor = game.add.sprite(0, game.height / 2, 'meteor');
         meteor.animations.add('attack');
         meteor.animations.play('attack',10,true);
@@ -50,12 +54,25 @@ var ui = {
         healthBar.body.immovable = true;
         uiColl.add(healthBar);
         
+        greenBar = game.add.sprite(0, game.height / 2, 'greenBar');
+        greenBar.x = 24;
+        greenBar.y = healthBar.y+65;
+        greenBar.cropEnabled = true;
+        greenBar.maxHeight = greenBar.height;
+
+        
+        
         playerPic = game.add.sprite(7,7,'playerPic',0);
         
     },
     
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.
-        healthBar.crop.width = (health / maxHealth) * healthBar.width; // Crops the health bar as health goes down.
+        var newHeight = greenBar.maxHeight * (health/maxHealth);
+        console.log(newHeight);
+        console.log(greenBar.maxHeight);
+        if (newHeight < greenBar.height){
+            greenBar.height = newHeight;
+        }
         if (meteor.y < game.height - meteor.height / 2) {
             meteor.y = (game.height - meteor.height / 2) - game.height * (timeLeft / maxGameTime);
         }
