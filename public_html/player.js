@@ -20,8 +20,7 @@ var playerSpeed = 200;
 var aSound;
 var endValue;
 var fromDir = 'S';
-var totalTime = 180;
-var timeLeft = totalTime;
+
 function player(game, image, aImage, attackSound)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -239,10 +238,7 @@ function player(game, image, aImage, attackSound)
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
-        timeInSeconds = game.time.elapsed/1000;
-        console.log(timeLeft);
-        timeLeft = timeLeft - timeInSeconds;
-        ui.update(game,100,100,timeLeft,totalTime,dinoPlayer);
+
         return transition;
     };
     function attackAgain()
