@@ -46,6 +46,8 @@ pauseMusic.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
 }, false);
+var totalTime = 180;
+var timeLeft = totalTime;
  
 
 /* not sure why these lines were here as well as the bottom; commented out.
@@ -182,8 +184,8 @@ var level_0 = {
                 }
            }
        }
-
-       ui.update(game,100,100,100,100,dinoPlayer);
+       timeLeft = timeLeft - game.time.elapsed/1000;
+       ui.update(game,100,100,timeLeft,totalTime,dinoPlayer);
        playerCircle.x = dinoPlayer.getX(); 
        playerCircle.y = dinoPlayer.getY(); 
        //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
