@@ -111,6 +111,7 @@ var level_0 = {
             tileBody.collides(playerCollisionGroup);
             tileBody.collides(enemyCollisionGroup);
         }
+        
         //HARDCODING 2-5 DINOS
         for (var i = 0; i < Math.floor(Math.random()*4 + 2); i++)
         {
@@ -133,7 +134,7 @@ var level_0 = {
             }
             
         }
-        for (var c = 0; c < enemyPool.size; c++)
+        for (var c = 0; c < enemyPool.length; c++)
         {
             enemyPool[c].getEnemyAttack().body.onBeginContact.add(this.attackPlayer, this);
         }
