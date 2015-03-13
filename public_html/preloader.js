@@ -28,6 +28,10 @@ var preloader = {
             game.load.image('vertBar', 'assets/vertBar.png');
             game.load.image('vertBar2', 'assets/vertBar.png');
             game.load.image('horiBar', 'assets/horiBar.png');
+            game.load.image('bar1','assets/bar1.png')
+            game.load.image('bar2','assets/bar2.png')
+            game.load.image('bar3','assets/bar3.png')
+            game.load.image('bar4','assets/bar4.png')
             game.load.spritesheet('meteor', 'assets/meteor.png', 76, 212, 2);
             game.load.image('world','assets/world.png');
             game.load.image('greenBar','assets/greenBar.png');

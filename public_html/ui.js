@@ -51,14 +51,56 @@ var ui = {
         evolutionBar.x = game.width /2;
         evolutionBar.y = game.height - evolutionBar.height/2 - 5;
         
+        bar1 = game.add.sprite(0,game.height,'bar1');
+        bar1.anchor.setTo(.5,.5);
+        bar1.y = game.height - evolutionBar.height/2-1;
+        bar1.x = 178;
+        bar1.maxWidth = bar1.width;
+        
+        bar2 = game.add.sprite(0,game.height,'bar2');
+        bar2.anchor.setTo(.5,.5);
+        bar2.y = game.height - evolutionBar.height/2-1;
+        bar2.x = bar1.x+140;
+        
+        bar3 = game.add.sprite(0,game.height,'bar3');
+        bar3.anchor.setTo(.5,.5);
+        bar3.y = game.height - evolutionBar.height/2-1;
+        bar3.x = bar2.x+140;
+        
+        bar4 = game.add.sprite(0,game.height,'bar4');
+        bar4.anchor.setTo(.5,.5);
+        bar4.y = game.height - evolutionBar.height/2-1;
+        bar4.x = bar3.x+140;
+        
+        
         playerPic = game.add.sprite(7,7,'playerPic',0);
         
     },
     
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.
         var newHeight = greenBar.maxHeight * (health/maxHealth);
-        if (newHeight != greenBar.height){
+        var currBar = {bar: bar1}
+        function setBar(obj,barSet){
+            obj.bar = barSet;
+        }
+        if (playerLevel === 1){
+            setBar(currBar,bar1);
+        }
+        if (playerLevel === 2){
+            setBar(currBar,bar2);         
+        }
+        if (playerLevel === 3){
+            setBar(currBar,bar3);            
+        }
+        if (playerLevel === 4){
+            setBar(currBar,bar4);            
+        }
+        var newBarWidth = bar1.maxWidth * (playerXP/levelingXP);
+        if (newHeight !== greenBar.height){
             greenBar.height = newHeight;
+        }
+        if (newBarWidth !== currBar.bar.width){
+            currBar.bar.width = newBarWidth;
         }
         if (meteor.y < game.height - meteor.height / 2) {
             meteor.y = (game.height - meteor.height / 2) - game.height * (timeLeft / maxGameTime);

@@ -262,6 +262,7 @@ function player(game, image, aImage, attackSound)
                 if (plantsEatenAtLevel < animalsEatenAtLevel){
                     playerDamage = playerDamage+1;
                 } else {
+                    enemyCircle = enemyCircle - 20;
                 }
             }
             if (playerLevel === 3){
@@ -270,6 +271,7 @@ function player(game, image, aImage, attackSound)
                 if (plantsEatenAtLevel < animalsEatenAtLevel){
                     playerDamage = playerDamage+1;
                 } else {
+                    enemyCircle = enemyCircle - 20;
                 }                
             }
             if (playerLevel === 4){
@@ -278,6 +280,7 @@ function player(game, image, aImage, attackSound)
                 if (plantsEatenAtLevel < animalsEatenAtLevel){
                     playerDamage = playerDamage+1;
                 } else {
+                    enemyCircle = enemyCircle - 20;    
                 }                
             }
             plantsEatenAtLevel = 0;

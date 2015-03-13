@@ -1,4 +1,4 @@
-
+var enemyCircle = 100;
 function enemy(game, image, aImage, group)
 {
     this.sizeModifier = Math.floor(Math.random()*5);
@@ -22,7 +22,7 @@ function enemy(game, image, aImage, group)
     this.badGuy.body.height = 30 + (this.sizeModifier * 10);
 
     this.enemyCircle = new Phaser.Circle(this.badGuy.x, this.badGuy.y, 
-        100 + Math.floor(this.badGuy.width*2) );
+        enemyCircle + Math.floor(this.badGuy.width*2) );
     this.attackCircle = new Phaser.Circle(this.badGuy.x, this.badGuy.y, 
         20 + Math.floor(this.badGuy.width*1.5) );
     this.enemySwipe = game.add.sprite(350,350,aImage);

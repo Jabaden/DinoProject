@@ -25,8 +25,13 @@ var end = {
                 playerXP = 0;
                 playerHealth = 20;
                 maxPlayerHealth = 20;
-                levelingXP = 1;
+                levelingXP = 20;
+                victoryXP = levelingXP * 2.25*2.25*2.25;
                 playerSpeed = 200;
+                plantsEatenAtLevel = 0;
+                animalsEatenAtLevel = 0;
+                playerLevel = 1;
+                playerDamage = 1;
                 timeLeft = totalTime
                 game.state.start('mainMenu');
             }
@@ -42,8 +47,13 @@ var end = {
                 playerXP = 0;
                 playerHealth = 20;
                 maxPlayerHealth = 20;
-                levelingXP = 1;
+                levelingXP = 20;
+                victoryXP = levelingXP * 2.25*2.25*2.25;
                 playerSpeed = 200;
+                plantsEatenAtLevel = 0;
+                animalsEatenAtLevel = 0;
+                playerLevel = 1;
+                playerDamage = 1;
                 timeLeft = totalTime
                 game.state.start('mainMenu');
             }
