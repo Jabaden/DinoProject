@@ -30,7 +30,7 @@ function player(game, image, aImage, attackSound)
     swipe = game.add.sprite(250, 250, aImage);
     swipe.animations.add('attackSwipe');
     game.physics.p2.enable(dino, false);
-    game.physics.p2.enable(swipe, false);
+    game.physics.p2.enable(swipe, false); // 'true' to show debug box for attack
     game.physics.enable(dino, Phaser.Physics.ARCADE);
     game.physics.enable(dino);
     dino.body.collideWorldBounds = true;
@@ -41,7 +41,6 @@ function player(game, image, aImage, attackSound)
        pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
        restartKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
        quitKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-    
     
     // Dino Leveling Statistics
 
@@ -204,7 +203,7 @@ function player(game, image, aImage, attackSound)
                 swipe.animations.play('attackSwipe', 10, true);
                 aSound.play();
                 isAttacking = true;
-                game.time.events.add(300, attackAgain, this);
+                game.time.events.add(600, attackAgain, this);
                 game.time.events.add(300, swipe.kill, swipe);
             }
             

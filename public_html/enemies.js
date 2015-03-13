@@ -1,3 +1,4 @@
+
 function enemy(game, image, aImage, group)
 {
     this.enemySwipe;

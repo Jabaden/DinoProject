@@ -44,6 +44,10 @@ var preloader = {
             game.load.audio('menuMusic', 'assets/Extinction Menu Music.ogg');
             game.load.audio('pauseMusic', 'assets/Extinction Pause Music.ogg');
             
+            // Loading music
+            game.load.audio('menuMusic', 'assets/Extinction Menu Music.ogg');
+            game.load.audio('pauseMusic', 'assets/Extinction Pause Music.ogg');
+            
         },
         create: function(){
             //shows our logo before main screen
@@ -54,4 +58,4 @@ var preloader = {
         start: function(){
             game.state.start('mainMenu');
         }
-        };
+    };
