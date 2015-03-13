@@ -19,6 +19,7 @@ var levelingXP = 1;
 var playerSpeed = 200;
 var aSound;
 var endValue;
+var fromDir = 'S';
 function player(game, image, aImage, attackSound)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -28,7 +29,9 @@ function player(game, image, aImage, attackSound)
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     aSound = game.add.audio(attackSound);
     //aSound.addMarker('testAttack', 1, 1.0);
-    dino = game.add.sprite(200, 200, image);
+    var x = fromDir == 'W' ? 150 : fromDir == 'E' ? 630 : 380;
+    var y = fromDir == 'N' ?  80 : fromDir == 'S' ? 440 : 260;
+    dino = game.add.sprite(x, y, image);
     swipe = game.add.sprite(250, 250, aImage);
     swipe.animations.add('attackSwipe');
     game.physics.p2.enable(dino, false);
@@ -61,15 +64,24 @@ function player(game, image, aImage, attackSound)
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
             playerXP += 1;
-        }else if (currentTile.index == 8) { // warp tile
-            if (currentTile.x == 2) 
+        }
+        else if (currentTile.index == 8) { // warp tile
+            if (currentTile.x == 2){ 
                 console.log('go west');
-            if (currentTile.x == map.width-1) 
+                fromDir = 'E';
+            }
+            if (currentTile.x == map.width-1) {
                 console.log('go east');    
-            if (currentTile.y == 0)
+                fromDir = 'W';
+            }
+            if (currentTile.y == 0) {
                 console.log('go north');
-            if (currentTile.y == map.height-1)
+                fromDir = 'S';
+            }
+            if (currentTile.y == map.height-1) {
                 console.log('go south');
+                fromDir = 'N';
+            }
             transition = true;
         }
         //control the pause, restart, and quit actions
