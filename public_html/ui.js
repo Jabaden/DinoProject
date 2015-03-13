@@ -33,6 +33,8 @@ var ui = {
         uiColl.add(vertBar2);
         
         meteor = game.add.sprite(0, game.height / 2, 'meteor');
+        meteor.animations.add('attack');
+        meteor.animations.play('attack',30,true);
         meteor.anchor.setTo(0.5, 0.5);
         meteor.x = game.width - vertBar.width / 2;
         meteor.y = meteor.height - meteor.height / 2;

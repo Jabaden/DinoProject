@@ -46,6 +46,8 @@ pauseMusic.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
 }, false);
+var totalTime = 180;
+var timeLeft = totalTime;
  
 
 /* not sure why these lines were here as well as the bottom; commented out.
@@ -71,7 +73,8 @@ var level_0 = {
         bg_layer = map.createLayer(0);
         bg_layer.resizeWorld();
         map.setLayer(0);
-
+        
+        
         // enumerate collidable tile indeces:
         map.setCollisionBetween(2, 6, true, 0);
         map.setCollisionBetween(10, 11, true, 0);
@@ -97,7 +100,8 @@ var level_0 = {
         baddies = game.add.group();
         baddies.enableBody = true;
         baddies.physicsBodyType = Phaser.Physics.P2JS;
-
+        enemyAlert = false; 
+        
         for (var i = 0; i < tileObjects.length; i++) {
             var tileBody = tileObjects[i];
             tileBody.setCollisionGroup(tilesCollisionGroup);
@@ -182,8 +186,8 @@ var level_0 = {
                 }
            }
        }
-
-       ui.update(game,100,100,100,100,dinoPlayer);
+       timeLeft = timeLeft - game.time.elapsed/1000;
+       ui.update(game,100,100,timeLeft,totalTime,dinoPlayer);
        playerCircle.x = dinoPlayer.getX(); 
        playerCircle.y = dinoPlayer.getY(); 
        //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
@@ -192,6 +196,15 @@ var level_0 = {
            //accelerateTo(badDino.getSprite(), dinoPlayer.getSprite(),60);
            //enemyAlert = true;
        //}
+       
+       if (dinoPlayer.getX() <= 80 || dinoPlayer.getX() >= 720 
+                    || dinoPlayer.getY() <= 0 || dinoPlayer.getY() >= 520 
+                    || map.getTile(Math.floor(dinoPlayer.getX()/40), 
+                        Math.floor(dinoPlayer.getY()/40), 
+                        bg_layer, true).index !== 1) {
+                dinoPlayer.findNewPos();
+                console.log("spams");
+            }
        
         if (transition)
             game.state.start('level_0'); 

@@ -20,6 +20,7 @@ var playerSpeed = 200;
 var aSound;
 var endValue;
 var fromDir = 'S';
+
 function player(game, image, aImage, attackSound)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -246,6 +247,7 @@ function player(game, image, aImage, attackSound)
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
+
         return transition;
     };
     function attackAgain()
@@ -298,6 +300,10 @@ function player(game, image, aImage, attackSound)
     this.setMaxHealth = function (health) {
         maxPlayerHealth = health;
     };
+    this.findNewPos = function(){
+        dino.body.x = game.world.randomX;
+        dino.body.y = game.world.randomY;
+    }
 }
 
 
