@@ -20,6 +20,10 @@ var end = {
         game.input.onDown.add(showWin, self);
         function showWin(){
             game.add.sprite(146,215,'win');
+            game.input.onDown.add(startOver, self);
+            function startOver(){
+                game.state.start('mainMenu');
+            }
         }
     },
     lose: function() {
@@ -27,6 +31,10 @@ var end = {
         game.input.onDown.add(showLoss, self);
         function showLoss(){
             game.add.sprite(146,215,'lose');
+            game.input.onDown.add(startOver, self);
+            function startOver(){
+                game.state.start('mainMenu');
+            }
         }
     },
     credits: function(){
