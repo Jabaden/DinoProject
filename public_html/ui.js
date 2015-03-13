@@ -5,36 +5,24 @@ var ui = {
         uiColl = game.add.group();
         uiColl.enableBody = true;
         uiColl.physicsBodyType = Phaser.Physics.P2JS;
-        horiBar = game.add.sprite(0, 0, 'horiBar');
-        horiBar.height = 80;
-        horiBar.width = 800;
-        horiBar.x = ((game.width / 2) - (horiBar.width / 2));
-        horiBar.y = ((game.height) - (horiBar.height));
+        horiBar = game.add.sprite(79, 520, 'horiBar');
         game.physics.arcade.enable(horiBar);
         horiBar.body.immovable = true;
         uiColl.add(horiBar);
 
-        vertBar = game.add.sprite(0, 0, 'vertBar');
-        vertBar.height = 600;
-        vertBar.width = 80;
-        vertBar.x = ((game.width) - (vertBar.width));
-        vertBar.y = ((game.height / 2) - (vertBar.height / 2));
+        vertBar = game.add.sprite(-2, -1, 'vertBar');
         game.physics.arcade.enable(vertBar);
         vertBar.body.immovable = true;
         uiColl.add(vertBar);
         
-        vertBar2 = game.add.sprite(0, 0, 'vertBar2');
-        vertBar2.height = 600;
-        vertBar2.width = 80;
-        vertBar2.x = 0;
-        vertBar2.y = ((game.height / 2) - (vertBar2.height /2 ));
+        vertBar2 = game.add.sprite(716, 0, 'vertBar2');
         game.physics.arcade.enable(vertBar2);
         vertBar2.body.immovable = true;
         uiColl.add(vertBar2);
         
         world = game.add.sprite(0, 0, 'world');
-        world.x = game.width - world.width;
-        world.y = game.height - world.height;
+        world.x = game.width - world.width-4;
+        world.y = game.height - world.height-4;
         
         meteor = game.add.sprite(0, game.height / 2, 'meteor');
         meteor.animations.add('attack');
@@ -46,9 +34,7 @@ var ui = {
         meteor.body.immovable = true;
         uiColl.add(meteor);
         
-        healthBar = game.add.sprite(0, game.height / 2, 'healthBar');
-        healthBar.x = 5;
-        healthBar.y = 5;
+        healthBar = game.add.sprite(4, 5, 'healthBar');
         healthBar.cropEnabled = true;
         game.physics.arcade.enable(healthBar);
         healthBar.body.immovable = true;
