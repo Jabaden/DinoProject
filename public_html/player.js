@@ -291,6 +291,10 @@ function player(game, image, aImage, attackSound)
     this.setMaxHealth = function (health) {
         maxPlayerHealth = health;
     };
+    this.findNewPos = function(){
+        dino.body.x = game.world.randomX;
+        dino.body.y = game.world.randomY;
+    }
 }
 
 
