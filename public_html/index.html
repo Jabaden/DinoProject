@@ -173,7 +173,7 @@ var main = {
                     enemyPool[l].getEnemyAttack().body.angle = enemyPool[l].rotation;*/
                     enemyPool[l].cannotAttack();
                     game.time.events.add(500, enemyPool[l].canAttack, enemyPool[l]);
-                    game.time.events.add(50, enemyPool[l].killAttack, enemyPool[l]);
+                    game.time.events.add(300, enemyPool[l].killAttack, enemyPool[l]);
                     console.log("im attacking you!");
                 }
            }
