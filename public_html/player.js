@@ -99,7 +99,7 @@ function player(game, image, aImage, attackSound)
             playerXP = 0;
             playerHealth = 20;
             maxPlayerHealth = 20;
-            levelingXP = 1;
+            levelingXP = 20;
             playerSpeed = 200;
             game.state.start('level_0');
         }
@@ -250,7 +250,7 @@ function player(game, image, aImage, attackSound)
             //dino.width = Math.floor(dino.width * .9);
             //dino.height = Math.floor(dino.height * .9);
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
-            dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
+            dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()*.75);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
 
