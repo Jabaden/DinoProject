@@ -266,8 +266,8 @@ var level_0 = {
     directHit: function(body, shapeA, shapeB, equation) 
     {
         console.log("direct hit!");
-        console.log(body.sprite.health);
         body.sprite.health -= 1;
+        console.log("mob HP: " + body.sprite.health);
         if(body.sprite.health <= 0)
         {
             body.sprite.kill();
