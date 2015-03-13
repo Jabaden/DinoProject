@@ -38,7 +38,7 @@ function player(game, image, aImage, attackSound)
     swipe.body.kinematic = true;
     swipe.kill();
     //pausing the game
-       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
     
     
     // Dino Leveling Statistics
