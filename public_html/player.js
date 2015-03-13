@@ -100,11 +100,20 @@ function player(game, image, aImage, attackSound)
         }
         if(restartKey.isDown){
             //resets aspects of player as well
+            console.log("HEY RESTART");
             playerXP = 0;
             playerHealth = 20;
             maxPlayerHealth = 20;
             levelingXP = 20;
+            victoryXP = levelingXP * 2.25*2.25*2.25;
             playerSpeed = 200;
+            plantsEatenAtLevel = 0;
+            animalsEatenAtLevel = 0;
+            playerLevel = 1;
+            playerDamage = 1;
+            enemyCircleSize = 100;
+            console.log(levelingXP);
+            console.log(playerXP);
             game.state.start('level_0');
         }
         if(quitKey.isDown){
@@ -254,7 +263,7 @@ function player(game, image, aImage, attackSound)
             //dino.width = Math.floor(dino.width * .9);
             //dino.height = Math.floor(dino.height * .9);
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
-            dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()*.75);
+            dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()*.8);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
             if (playerLevel === 2){
                 console.log("Level2")

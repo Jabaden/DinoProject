@@ -25,6 +25,8 @@ var preloader = {
             game.load.spritesheet('playerAttackAni', 'assets/attack.png', 60, 10, 3);
             game.load.image('healthBar', 'assets/healthBar.png');
             game.load.spritesheet('playerPic','assets/health-mood.png',65,65,3,0,10);
+            game.load.spritesheet('happyPic','assets/health-happy-ouch.png',66,66,2);
+            game.load.spritesheet('sadPic','assets/health-sad-ouch.png',66,66,2);
             game.load.image('vertBar', 'assets/vertBar.png');
             game.load.image('vertBar2', 'assets/vertBar.png');
             game.load.image('horiBar', 'assets/horiBar.png');
@@ -47,6 +49,11 @@ var preloader = {
             game.load.image('lose', 'assets/failure.png');
             game.load.image('instruct','assets/instructions.png');
             game.load.image('logo', 'assets/logo.png');
+            game.load.image('bar1','assets/bar1.png');
+            game.load.image('bar2','assets/bar2.png');
+            game.load.image('bar3','assets/bar3.png');
+            game.load.image('bar4','assets/bar4.png');
+            
             
             // Loading music
             game.load.audio('menuMusic', 'assets/Extinction Menu Music.ogg');

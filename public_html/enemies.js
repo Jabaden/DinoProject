@@ -117,3 +117,10 @@ function enemy(game, image, aImage, group)
         return this.sizeModifer;
     }
 }   
+
+getEnemyCircleSize = function() {
+    return enemyCircleSize;
+}
+setEnemyCircleSize = function(num) {
+    enemyCircleSize = num;
+}
