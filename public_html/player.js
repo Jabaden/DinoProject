@@ -73,7 +73,7 @@ function player(game, image, aImage, attackSound)
             
 
         if(pauseKey.isDown){
-            main.managePause();
+            level_0.managePause();
         }
         
         dino.body.setZeroVelocity();
