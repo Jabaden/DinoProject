@@ -159,7 +159,8 @@ var level_0 = {
                enemyAlert = true;
                for(var q = 0; q < enemyPool.length; q++)
                {
-                   this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(), 60);
+                    this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(),
+                        80 - enemyPool[q].sizeModifier * 12 );
                }
 
            }
