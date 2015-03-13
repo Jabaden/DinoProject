@@ -35,6 +35,7 @@ function player(game, image, aImage, attackSound)
     dino = game.add.sprite(x, y, image);
     swipe = game.add.sprite(250, 250, aImage);
     swipe.animations.add('attackSwipe');
+    dino.animations.add('walk');
     game.physics.p2.enable(dino, false);
     game.physics.p2.enable(swipe, false); // 'true' to show debug box for attack
     game.physics.enable(dino, Phaser.Physics.ARCADE);
@@ -111,6 +112,7 @@ function player(game, image, aImage, attackSound)
                 upFront = false;
                 downFront = false;
                 rightFront = false;
+                dino.animations.play('walk', 5, true);
                 dino.body.angle = -90;
                 dino.angle = -90;
                 dino.body.moveLeft(playerSpeed);
@@ -122,6 +124,7 @@ function player(game, image, aImage, attackSound)
                 upFront = false;
                 downFront = false;
                 rightFront = true;
+                dino.animations.play('walk', 5, true);
                 dino.body.angle = 90;
                 dino.angle = 90;
                 dino.body.moveRight(playerSpeed);
@@ -133,6 +136,7 @@ function player(game, image, aImage, attackSound)
                 upFront = true;
                 downFront = false;
                 rightFront = false;
+                dino.animations.play('walk', 5, true);
                 dino.body.angle = 0;
                 dino.angle = 0;
                 dino.body.moveUp(playerSpeed);
@@ -144,6 +148,7 @@ function player(game, image, aImage, attackSound)
                 upFront = false;
                 downFront = true;
                 rightFront = false;
+                dino.animations.play('walk', 5, true);
                 dino.body.angle = 180;
                 dino.angle = 180;
                 dino.body.moveDown(playerSpeed);
@@ -222,13 +227,17 @@ function player(game, image, aImage, attackSound)
                     }
                 }
                 swipe.animations.stop(true);
-                swipe.animations.play('attackSwipe', 10, true);
+                swipe.animations.play('attackSwipe', 10, false);
                 aSound.play();
                 isAttacking = true;
                 game.time.events.add(600, attackAgain, this);
                 game.time.events.add(300, swipe.kill, swipe);
             }
-            
+            if(leftKey.isUp && rightKey.isUp && upKey.isUp && downKey.isUp)
+            {
+                dino.animations.stop();
+            }
+                
         }
         if (playerXP > levelingXP){ // Leveling up the dinosaur
             console.log("Level up!");
@@ -290,6 +299,10 @@ function player(game, image, aImage, attackSound)
     this.setMaxHealth = function (health) {
         maxPlayerHealth = health;
     };
+    this.findNewPos = function(){
+        dino.body.x = game.world.randomX;
+        dino.body.y = game.world.randomY;
+    }
 }
 
 

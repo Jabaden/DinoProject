@@ -202,6 +202,15 @@ var level_0 = {
            //enemyAlert = true;
        //}
        
+       if (dinoPlayer.getX() <= 80 || dinoPlayer.getX() >= 720 
+                    || dinoPlayer.getY() <= 0 || dinoPlayer.getY() >= 520 
+                    || map.getTile(Math.floor(dinoPlayer.getX()/40), 
+                        Math.floor(dinoPlayer.getY()/40), 
+                        bg_layer, true).index !== 1) {
+                dinoPlayer.findNewPos();
+                console.log("spams");
+            }
+       
         if (transition)
             game.state.start('level_0'); 
       },

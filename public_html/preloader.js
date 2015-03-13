@@ -5,7 +5,7 @@
  */
 var preloader = {
     preload: function() {
-            game.load.image('dinoSelf', 'assets/Dino.png');
+            game.load.spritesheet('dinoSelf', 'assets/Dinos.png', 60, 280, 3);
             game.load.image('dinoTri', 'assets/enemy-tri.png');
             game.load.image('dinoAnk', 'assets/enemy-ank.png');
             game.load.image('dinoSteg', 'assets/enemy-steg.png');
