@@ -46,7 +46,10 @@ var ui = {
         greenBar.cropEnabled = true;
         greenBar.maxHeight = greenBar.height;
 
-        
+        evolutionBar = game.add.sprite(0 , game.height, 'evolution');
+        evolutionBar.anchor.setTo(.5,.5);
+        evolutionBar.x = game.width /2;
+        evolutionBar.y = game.height - evolutionBar.height/2 - 5;
         
         playerPic = game.add.sprite(7,7,'playerPic',0);
         
@@ -54,7 +57,7 @@ var ui = {
     
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.
         var newHeight = greenBar.maxHeight * (health/maxHealth);
-        if (newHeight < greenBar.height){
+        if (newHeight != greenBar.height){
             greenBar.height = newHeight;
         }
         if (meteor.y < game.height - meteor.height / 2) {

@@ -212,7 +212,7 @@ var level_0 = {
            endValue = true;
            game.state.start('end');
        }
-       ui.update(game,100,100,timeLeft,totalTime,dinoPlayer);
+       ui.update(game,dinoPlayer.getHealth(),dinoPlayer.getMaxHealth(),timeLeft,totalTime,dinoPlayer);
        playerCircle.x = dinoPlayer.getX(); 
        playerCircle.y = dinoPlayer.getY(); 
        //console.log(Phaser.Circle.intersects(playerCircle, enemyCircle));
