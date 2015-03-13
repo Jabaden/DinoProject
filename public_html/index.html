@@ -270,6 +270,7 @@ var level_0 = {
         console.log("mob HP: " + body.sprite.health);
         if(body.sprite.health <= 0)
         {
+            console.log("mob XP: " + body.sprite.XP);
             body.sprite.kill();
             dinoPlayer.addXP(2);
             for(var a = 0; a < enemyPool.length; a++)

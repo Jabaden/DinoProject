@@ -2,6 +2,7 @@
 function enemy(game, image, aImage, group)
 {
     this.sizeModifier = Math.floor(Math.random()*5);
+    this.XP = 2 + this.sizeModifier;
     this.enemySwipe;
     this.attackAgain = true;
     console.log("enemy being called");
