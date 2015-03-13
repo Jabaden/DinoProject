@@ -92,6 +92,7 @@ var level_0 = {
         dinoPlayer.getSprite().height = playerHeight;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
         playerCircle = new Phaser.Circle(50, 50, 100);
+        dinoPlayer.allowAttack();
         
         game.physics.p2.setImpactEvents(true);
         playerCollisionGroup = game.physics.p2.createCollisionGroup();

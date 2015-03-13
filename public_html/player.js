@@ -311,6 +311,9 @@ function player(game, image, aImage, attackSound)
         dino.body.x = game.world.randomX;
         dino.body.y = game.world.randomY;
     }
+    this.allowAttack = function(){
+        isAttacking = false;
+    }
 }
 
 
