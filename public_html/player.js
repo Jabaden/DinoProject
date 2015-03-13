@@ -73,7 +73,7 @@ function player(game, image, aImage, attackSound)
             //console.log("colliding w/ shrub index #" + currentTile.index);
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
-            playerXP += 1;
+            this.addXP(1);
         }
         else if (currentTile.index == 8) { // warp tile
             if (currentTile.x == 2){ 
@@ -248,8 +248,9 @@ function player(game, image, aImage, attackSound)
                 
         }
         if (playerXP > levelingXP){ // Leveling up the dinosaur
-            console.log("Level up!");
+            
             levelingXP = Math.floor(levelingXP*2.5);
+            console.log("Level up! Need " + levelingXP + " for next level.");
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
@@ -284,8 +285,9 @@ function player(game, image, aImage, attackSound)
 
     this.addXP = function (xp) {
         playerXP += xp;
+        console.log("player's XP:" + playerXP );
     };
-
+    
     this.getXP = function () {
         return playerXP;
     };
