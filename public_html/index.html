@@ -39,7 +39,7 @@ var baddies;
 var enemyPool;
 var pauseKey;
 var enemyCanAttack = true;
-
+var enemySprites = ['dinoTri', 'dinoVel', 'dinoAnk', 'dinoSteg'];
 var pauseMusic = new Audio('assets/Extinction Pause Music.ogg');
 pauseMusic.addEventListener('ended', function() {
     this.currentTime = 0;
@@ -105,7 +105,8 @@ var main = {
         //HARDCODING 4 DINOS
         for (var i = 0; i < 4; i++)
         {
-            var eDino = new enemy(game, 'dinoBG', 'playerAttackAni', baddies);
+            var dinoSpriteName = enemySprites[Math.floor(Math.random()*4 ) ];
+            var eDino = new enemy(game, dinoSpriteName, 'playerAttackAni', baddies);
             eDino.getSprite().body.setRectangleFromSprite(eDino.getSprite());
             eDino.getSprite().body.setCollisionGroup(enemyCollisionGroup);
             eDino.getSprite().body.collides([enemyCollisionGroup, 
