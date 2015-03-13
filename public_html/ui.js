@@ -34,7 +34,7 @@ var ui = {
         
         meteor = game.add.sprite(0, game.height / 2, 'meteor');
         meteor.animations.add('attack');
-        meteor.animations.play('attack',30,true);
+        meteor.animations.play('attack',10,true);
         meteor.anchor.setTo(0.5, 0.5);
         meteor.x = game.width - vertBar.width / 2;
         meteor.y = meteor.height - meteor.height / 2;
@@ -57,7 +57,7 @@ var ui = {
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.
         healthBar.crop.width = (health / maxHealth) * healthBar.width; // Crops the health bar as health goes down.
         if (meteor.y < game.height - meteor.height / 2) {
-            meteor.y = (game.height + meteor.height / 2) - game.height * (timeLeft / maxGameTime);
+            meteor.y = (game.height - meteor.height / 2) - game.height * (timeLeft / maxGameTime);
         }
         game.physics.arcade.collide(player, uiColl);
     }
