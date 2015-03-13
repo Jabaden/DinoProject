@@ -13,8 +13,8 @@ var rightFront = false;
 var isAttacking = false;
 var swipe;
 var playerXP = 0;
-var playerHealth = 5;
-var maxPlayerHealth = 5;
+var playerHealth = 20;
+var maxPlayerHealth = 20;
 var levelingXP = 20;
 var playerSpeed = 200;
 var aSound;
@@ -96,8 +96,8 @@ function player(game, image, aImage, attackSound)
         if(restartKey.isDown){
             //resets aspects of player as well
             playerXP = 0;
-            playerHealth = 5;
-            maxPlayerHealth = 5;
+            playerHealth = 20;
+            maxPlayerHealth = 20;
             levelingXP = 1;
             playerSpeed = 200;
             game.state.start('level_0');
