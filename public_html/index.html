@@ -198,11 +198,16 @@ var level_0 = {
        timeLeft = timeLeft - game.time.elapsed/1000;
        //console.log(timeLeft);
        if (timeLeft < 0){
-
+            endValue = false;
+            game.state.start('end');
        }
        if (dinoPlayer.getHealth() <= 0){
             endValue = false;
             game.state.start('end');
+       }
+       if (dinoPlayer.getXP() > victoryXP){
+           endValue = true;
+           game.state.start('end');
        }
        ui.update(game,100,100,timeLeft,totalTime,dinoPlayer);
        playerCircle.x = dinoPlayer.getX(); 
