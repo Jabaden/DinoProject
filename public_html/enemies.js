@@ -13,18 +13,21 @@ function enemy(game, image, aImage, group)
     game.physics.enable(this.badGuy, Phaser.Physics.ARCADE);
     
     this.badGuy.body.collideWorldBounds = true;
-    this.enemyCircle = new Phaser.Circle(game.world.centerX, 125,125);
-    this.attackCircle = new Phaser.Circle(game.world.centerX, 50,50);
-    this.enemySwipe = game.add.sprite(350,350,aImage);
-    game.physics.p2.enable(this.enemySwipe, false);
-    this.enemySwipe.animations.add('attackSwipe');
+
     this.badGuy.XP = Math.floor(2 + (2/3 * this.sizeModifier) );
     this.badGuy.health = 2 + Math.floor(this.sizeModifier * 1.5);
     this.badGuy.width = 30 + (this.sizeModifier * 10);
     this.badGuy.height = 75 + (this.sizeModifier * 25);
     this.badGuy.body.width = 30 + (this.sizeModifier * 10);
     this.badGuy.body.height = 30 + (this.sizeModifier * 10);
-    
+
+    this.enemyCircle = new Phaser.Circle(game.world.centerX, 125, 125);
+    this.attackCircle = new Phaser.Circle(game.world.centerX, 
+        20 + Math.floor(this.badGuy.width*1.5), 
+        20 + Math.floor(this.badGuy.width*1.5) );
+    this.enemySwipe = game.add.sprite(350,350,aImage);
+    game.physics.p2.enable(this.enemySwipe, false);
+    this.enemySwipe.animations.add('attackSwipe');
     this.enemySwipe.body.kinematic = true;
     this.enemySwipe.kill();
     
