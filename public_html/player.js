@@ -70,10 +70,17 @@ function player(game, image, aImage, attackSound)
                 console.log('go south');
             transition = true;
         }
+        //control the pause, restart, and quit actions
         if(pauseKey.isDown){
             level_0.managePause();
         }
         if(restartKey.isDown){
+            //resets aspects of player as well
+            playerXP = 0;
+            playerHealth = 5;
+            maxPlayerHealth = 5;
+            levelingXP = 1;
+            playerSpeed = 200;
             game.state.start('level_0');
         }
         if(quitKey.isDown){
@@ -135,7 +142,7 @@ function player(game, image, aImage, attackSound)
                     swipe.body.y = dino.y;
                     swipe.angle = -90;
                     swipe.body.angle = -90;
-                    //testing end screens
+                    //testing end screens(false to lose, true to win)
                     endValue = false;
                     game.state.start('end');
                 }
