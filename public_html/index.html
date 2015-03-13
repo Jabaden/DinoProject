@@ -187,6 +187,9 @@ var level_0 = {
                     game.time.events.add(500, enemyPool[l].canAttack, enemyPool[l]);
                     game.time.events.add(300, enemyPool[l].killAttack, enemyPool[l]);
                     console.log("im attacking you!");
+                    dinoPlayer.setHealth(dinoPlayer.getHealth() 
+                            - (1 + Math.floor(0.5 * enemyPool[l].sizeModifier) ) );
+                    console.log("hp left: " + dinoPlayer.getHealth() );
                 }
            }
        }
@@ -197,7 +200,7 @@ var level_0 = {
        if (timeLeft < 0){
 
        }
-       if (dinoPlayer.getHealth() < 0){
+       if (dinoPlayer.getHealth() <= 0){
             endValue = false;
             game.state.start('end');
        }

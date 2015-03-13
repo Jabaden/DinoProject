@@ -82,7 +82,7 @@ function enemy(game, image, aImage, group)
     }
     this.killAttack = function()
     {
-        console.log("kill attack");
+        //console.log("kill attack");
         this.enemySwipe.kill();
     }
     this.reviveAttack = function()
