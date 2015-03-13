@@ -2,7 +2,7 @@
 function enemy(game, image, aImage, group)
 {
     this.sizeModifier = Math.floor(Math.random()*5);
-    this.XP = 2 + this.sizeModifier;
+    
     this.enemySwipe;
     this.attackAgain = true;
     console.log("enemy being called");
@@ -18,6 +18,7 @@ function enemy(game, image, aImage, group)
     this.enemySwipe = game.add.sprite(350,350,aImage);
     game.physics.p2.enable(this.enemySwipe, false);
     this.enemySwipe.animations.add('attackSwipe');
+    this.badGuy.XP = Math.floor(2 + (2/3 * this.sizeModifier) );
     this.badGuy.health = 2 + Math.floor(this.sizeModifier * 1.5);
     this.badGuy.width = 30 + (this.sizeModifier * 10);
     this.badGuy.height = 75 + (this.sizeModifier * 25);
