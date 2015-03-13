@@ -304,8 +304,8 @@ var level_1 = {
         playerCircle = new Phaser.Circle(50,50,115);
         dinoPlayer = new player(game, 'dinoSelf', 'playerAttackAni',
             'swipeSound');
-        dinoPlayer.getSprite().width = 30;
-        dinoPlayer.getSprite().height = 50;
+        dinoPlayer.getSprite().width = 25;
+        dinoPlayer.getSprite().height = 60;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
         // game.physics.enable(map, Phaser.Physics.ARCADE);
         game.physics.p2.setImpactEvents(true);
