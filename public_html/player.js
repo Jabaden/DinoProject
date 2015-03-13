@@ -16,15 +16,12 @@ var playerXP = 0;
 var playerHealth = 20;
 var maxPlayerHealth = 20;
 var levelingXP = 20;
-var victoryXP = levelingXP * 2.25*2.25*2.25;
+var victoryXP = levelingXP * 2.25*2.25*2.25
 var playerSpeed = 200;
 var aSound;
 var endValue;
 var fromDir = 'S';
-var plantsEatenAtLevel = 0;
-var animalsEatenAtLevel = 0;
-var playerLevel = 1;
-var playerDamage = 1;
+
 function player(game, image, aImage, attackSound)
 {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -73,7 +70,6 @@ function player(game, image, aImage, attackSound)
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
             this.addXP(1);
-            plantsEatenAtLevel = plantsEatenAtLevel + 1;
         }
         else if (currentTile.index == 8) { // warp tile
             if (currentTile.x == 2){ 
@@ -248,7 +244,7 @@ function player(game, image, aImage, attackSound)
                 
         }
         if (playerXP > levelingXP){ // Leveling up the dinosaur
-            playerLevel = playerLevel + 1;
+            
             levelingXP = Math.floor(levelingXP*2.5);
             console.log("Level up! Need " + levelingXP + " for next level.");
             //dino.width = Math.floor(dino.width * .9);
@@ -256,32 +252,6 @@ function player(game, image, aImage, attackSound)
             dinoPlayer.setSpeed(dinoPlayer.getSpeed()+25);
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()*.75);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
-            if (playerLevel === 2){
-                console.log("Level2")
-                level2 = true;
-                if (plantsEatenAtLevel < animalsEatenAtLevel){
-                    playerDamage = playerDamage+1;
-                } else {
-                }
-            }
-            if (playerLevel === 3){
-                console.log("Level3")
-                level3 = true;
-                if (plantsEatenAtLevel < animalsEatenAtLevel){
-                    playerDamage = playerDamage+1;
-                } else {
-                }                
-            }
-            if (playerLevel === 4){
-                console.log("Level4")
-                level4 = true;
-                if (plantsEatenAtLevel < animalsEatenAtLevel){
-                    playerDamage = playerDamage+1;
-                } else {
-                }                
-            }
-            plantsEatenAtLevel = 0;
-            animalsEatenAtLevel = 0;
         }
 
         return transition;
@@ -344,24 +314,6 @@ function player(game, image, aImage, attackSound)
     this.allowAttack = function(){
         isAttacking = false;
     }
-    this.getPlantsEatenAtLevel = function (){
-        return plantsEatenAtLevel;
-    };
-    this.setPlantsEatenAtLevel = function (num){
-        plantsEatenAtLevel = num;
-    };
-    this.getAnimalsEatenAtLevel = function (){
-        return animalsEatenAtLevel;
-    };
-    this.setAnimalsEatenAtLevel = function (num){
-        animalsEatenAtLevel = num;
-    };
-    this.getAttackDamage = function(){
-        return playerDamage;
-    };
-    this.setAttackDamage = function(num){
-        playerDamage = num;
-    };
 }
 
 
