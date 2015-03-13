@@ -289,13 +289,14 @@ var level_0 = {
     directHit: function(body, shapeA, shapeB, equation) 
     {
         console.log("direct hit!");
-        body.sprite.health -= 1;
+        body.sprite.health -= dinoPlayer.getAttackDamage();
         console.log("mob HP: " + body.sprite.health);
         if(body.sprite.health <= 0)
         {
             console.log("mob XP: " + body.sprite.XP);
             body.sprite.kill();
             dinoPlayer.addXP(body.sprite.XP);
+            dinoPlayer.setAnimalsEatenAtLevel(dinoPlayer.getAnimalsEatenAtLevel()+1);
             for(var a = 0; a < enemyPool.length; a++)
             {
                 if(enemyPool[a].getSprite().body === body)
