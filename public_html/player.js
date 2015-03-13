@@ -38,7 +38,9 @@ function player(game, image, aImage, attackSound)
     swipe.body.kinematic = true;
     swipe.kill();
     //pausing the game
-       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+       restartKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+       quitKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
     
     
     // Dino Leveling Statistics
@@ -46,12 +48,39 @@ function player(game, image, aImage, attackSound)
 
     //swipe.revive();
     //swipe.body.fixedRotation = true;
-    this.update = function ()
-    {
-        if(pauseKey.isDown){
-            main.managePause();
+     this.update = function (map, bg_layer)
+    {   
+        var transition = false;
+        
+        //check for overlap w/ shrubs:
+        var currentTile = map.getTile(Math.floor(dino.x/40),
+            Math.floor(dino.y/40), bg_layer, true);
+        if (currentTile.index == 7 || currentTile.index == 9){
+            console.log("colliding w/ shrub index #" + currentTile.index);
+            map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
+            map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
+            playerXP += 1;
+        }else if (currentTile.index == 8) { // warp tile
+            if (currentTile.x == 2) 
+                console.log('go west');
+            if (currentTile.x == map.width-1) 
+                console.log('go east');    
+            if (currentTile.y == 0)
+                console.log('go north');
+            if (currentTile.y == map.height-1)
+                console.log('go south');
+            transition = true;
         }
-
+        if(pauseKey.isDown){
+            level_0.managePause();
+        }
+        if(restartKey.isDown){
+            game.state.start('level_0');
+        }
+        if(quitKey.isDown){
+            game.state.start('mainMenu');
+        }
+        
         dino.body.setZeroVelocity();
         if (isAttacking == false) {
             if (leftKey.isDown)
@@ -107,6 +136,9 @@ function player(game, image, aImage, attackSound)
                     swipe.body.y = dino.y;
                     swipe.angle = -90;
                     swipe.body.angle = -90;
+                    //testing end screens
+                    endValue = false;
+                    game.state.start('end');
                 }
                 else if (rightKey.isDown)
                 {
@@ -184,6 +216,7 @@ function player(game, image, aImage, attackSound)
             dinoPlayer.setMaxHealth(dinoPlayer.getMaxHealth()-1);
             dinoPlayer.setHealth(dinoPlayer.getMaxHealth());
         }
+        return transition;
     };
     function attackAgain()
     {

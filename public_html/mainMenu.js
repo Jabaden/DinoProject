@@ -7,12 +7,19 @@ var mainMenu = {
   create: function() {
       game.add.sprite(0, 0, 'background');
 // add the button that will start the game
-      var play = game.add.sprite(50, 500, 'play');
-      play.inputEnabled = true;
-      play.events.onInputDown.add(this.startGame, this);
+      var play = game.add.button(50, 500, 'play', this.startGame, this, 1, 0);
+      menuMusic = game.add.audio('menuMusic');
+      menuMusic.play('',0,1,true);
   },
   startGame: function(){
-      game.state.start('main');
+      
+      game.add.sprite(0,0,'instruct');
+      game.input.onDown.add(instruct, self);
+      function instruct(){
+            menuMusic.stop();
+            game.state.start('level_0');
+        }
+      
   }
 };
 
