@@ -70,7 +70,7 @@ function player(game, image, aImage, attackSound)
         var currentTile = map.getTile(Math.floor(dino.x/40),
             Math.floor(dino.y/40), bg_layer, true);
         if (currentTile.index == 7 || currentTile.index == 9){
-            console.log("colliding w/ shrub index #" + currentTile.index);
+            //console.log("colliding w/ shrub index #" + currentTile.index);
             map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
             map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
             playerXP += 1;
