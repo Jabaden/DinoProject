@@ -187,9 +187,14 @@ var level_0 = {
                 }
            }
        }
+       
+       // Win and lose conditions
        timeLeft = timeLeft - game.time.elapsed/1000;
        //console.log(timeLeft);
        if (timeLeft < 0){
+
+       }
+       if (dinoPlayer.getHealth() < 0){
             endValue = false;
             game.state.start('end');
        }

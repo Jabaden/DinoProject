@@ -14,7 +14,7 @@ function enemy(game, image, aImage, group)
     
     this.badGuy.body.collideWorldBounds = true;
 
-    this.badGuy.XP = Math.floor(2 + (2/3 * this.sizeModifier) );
+    this.badGuy.XP = Math.floor(4 + (2/3 * this.sizeModifier) );
     this.badGuy.health = 2 + Math.floor(this.sizeModifier * 1.5);
     this.badGuy.width = 30 + (this.sizeModifier * 10);
     this.badGuy.height = 75 + (this.sizeModifier * 25);
