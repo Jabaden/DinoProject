@@ -47,10 +47,11 @@ pauseMusic.addEventListener('ended', function() {
 }, false);
  
 
-game.state.add('preloader',preloader);
-game.state.add('mainMenu', mainMenu);
-game.state.add('main', main);
-game.state.start('preloader');
+/* not sure why these lines were here as well as the bottom; commented out.
+ *  - brett */
+//game.state.add('preloader',preloader);
+//game.state.add('main', main);
+//game.state.start('preloader');
 
 
 var main = {
@@ -295,6 +296,8 @@ var main = {
     }
    
 };
+
+game.state.add('mainMenu', mainMenu);
 game.state.add('preloader',preloader);
 game.state.add('main', main);
 game.state.start('preloader');
