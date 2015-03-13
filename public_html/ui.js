@@ -68,8 +68,6 @@ var ui = {
     
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.
         var newHeight = greenBar.maxHeight * (health/maxHealth);
-        console.log(newHeight);
-        console.log(greenBar.maxHeight);
         if (newHeight < greenBar.height){
             greenBar.height = newHeight;
         }
