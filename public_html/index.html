@@ -41,7 +41,6 @@ var pauseKey;
 var enemyCanAttack = true;
 var enemySprites = ['dinoTri', 'dinoVel', 'dinoAnk', 'dinoSteg'];
 var pauseMusic = new Audio('assets/Extinction Pause Music.ogg');
-var fromDirection = 'north'
 pauseMusic.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
@@ -81,11 +80,12 @@ var level_0 = {
         game.physics.enable(bg_layer);
 
         playerCircle = new Phaser.Circle(50,50,115);
-        dinoPlayer = new player(game, 'dinoSelf','playerAttackAni','swipeSound');
-        dinoPlayer.getSprite().width = 30;
-        dinoPlayer.getSprite().height = 50;
+        dinoPlayer = new player(game, 'dinoSelf', 'playerAttackAni', 
+            'swipeSound');
+        dinoPlayer.getSprite().width = 25;
+        dinoPlayer.getSprite().height = 60;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
-        // game.physics.enable(map, Phaser.Physics.ARCADE);
+        
         game.physics.p2.setImpactEvents(true);
         playerCollisionGroup = game.physics.p2.createCollisionGroup();
         enemyCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -161,7 +161,7 @@ var level_0 = {
            }
            if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getACircle()) === true)
            {
-               console.log(enemyPool[l].queryAttack());
+//               console.log(enemyPool[l].queryAttack());
                if(enemyPool[l].queryAttack() == true)
                {
                     enemyPool[l].getEnemyAttack().revive();
@@ -194,7 +194,7 @@ var level_0 = {
        //}
        
         if (transition)
-            game.state.start('level_1'); 
+            game.state.start('level_1', false, false); 
       },
     render: function()
     {
@@ -326,7 +326,8 @@ var level_1 = {
         game.physics.enable(bg_layer);
 
         playerCircle = new Phaser.Circle(50,50,115);
-        dinoPlayer = new player(game, 'dinoSelf','playerAttackAni','swipeSound');
+        dinoPlayer = new player(game, 'dinoSelf', 'playerAttackAni',
+            'swipeSound');
         dinoPlayer.getSprite().width = 30;
         dinoPlayer.getSprite().height = 50;
         dinoPlayer.getSprite().body.setRectangleFromSprite(dinoPlayer.getSprite());
@@ -362,10 +363,11 @@ var level_1 = {
             eDino.getEnemyAttack().body.collides(playerCollisionGroup);
             enemyPool.push(eDino);
             
-            // bug: checking this loop condition occasionally crashes, w/ a complaing about a null reference.
-            while (map.getTile(Math.floor(eDino.getX()/40), 
-                    Math.floor(eDino.getY()/40), 
-                    bg_layer, true).index !== 1) {
+            while (eDino.getX() <= 80 || eDino.getX() >= 720 
+                    || eDino.getY() <= 0 || eDino.getY() >= 520 
+                    || map.getTile(Math.floor(eDino.getX()/40), 
+                        Math.floor(eDino.getY()/40), 
+                        bg_layer, true).index !== 1) {
                 eDino.findNewPos();
             }
             
@@ -405,7 +407,7 @@ var level_1 = {
            }
            if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getACircle()) === true)
            {
-               console.log(enemyPool[l].queryAttack());
+//               console.log(enemyPool[l].queryAttack());
                if(enemyPool[l].queryAttack() == true)
                {
                     enemyPool[l].getEnemyAttack().revive();
@@ -438,7 +440,7 @@ var level_1 = {
        //}
        
        if (transition)
-           game.state.start('level_0');
+           game.state.start('level_0', false, false);
         
       },
     render: function()

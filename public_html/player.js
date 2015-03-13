@@ -17,8 +17,10 @@ var maxPlayerHealth = 5;
 var levelingXP = 1;
 var playerSpeed = 200;
 var aSound;
+var fromDirection = 'E';
 function player(game, image, aImage, attackSound)
 {
+    console.log("fromdir: " + fromDirection);
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
     var downKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
     var leftKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -26,19 +28,27 @@ function player(game, image, aImage, attackSound)
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     aSound = game.add.audio(attackSound);
     //aSound.addMarker('testAttack', 1, 1.0);
-    dino = game.add.sprite(200, 200, image);
+    var x = (fromDirection == 'W' ? 150 : fromDirection == 'E' ? 650 : 380);
+    var y = (fromDirection == 'N' ?  80 : fromDirection == 'S' ? 460 : 260);
+    
+    dino = game.add.sprite(x, y, image);
+    
+    
     swipe = game.add.sprite(250, 250, aImage);
     swipe.animations.add('attackSwipe');
     game.physics.p2.enable(dino, false);
     game.physics.p2.enable(swipe, false); // 'true' to show debug box for attack
     game.physics.enable(dino, Phaser.Physics.ARCADE);
     game.physics.enable(dino);
+    
     dino.body.collideWorldBounds = true;
     dino.body.fixedRotation = true;
     swipe.body.kinematic = true;
     swipe.kill();
+    
+    
     //pausing the game
-       pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+    pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
     
     
     // Dino Leveling Statistics
@@ -53,24 +63,34 @@ function player(game, image, aImage, attackSound)
         //check for overlap w/ shrubs:
         var currentTile = map.getTile(Math.floor(dino.x/40),
             Math.floor(dino.y/40), bg_layer, true);
-        if (currentTile.index == 7 || currentTile.index == 9){
-            console.log("colliding w/ shrub index #" + currentTile.index);
-            map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
-            map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
-            playerXP += 1;
+        if (currentTile != null){
+            if (currentTile.index == 7 || currentTile.index == 9){
+                console.log("colliding w/ shrub index #" + currentTile.index);
+                map.replace(7, 1, currentTile.x, currentTile.y, 1, 1);
+                map.replace(9, 1, currentTile.x, currentTile.y, 1, 1);
+                playerXP += 1;
+            }
+            else if (currentTile.index == 8) { // warp tile
+                if (currentTile.x == 2){ 
+                    console.log('go west');
+                    fromDirection = 'E';
+                }
+                if (currentTile.x == map.width-1) {
+                    console.log('go east');    
+                    fromDirection = 'W';
+                }
+                if (currentTile.y == 0){
+                    console.log('go north');
+                    fromDirection = 'S';
+                }
+                if (currentTile.y == map.height-1){
+                    console.log('go south');
+                    fromDirection = 'N';
+                }
+                transition = true;
+            }
         }
-        else if (currentTile.index == 8) { // warp tile
-            if (currentTile.x == 2) 
-                console.log('go west');
-            if (currentTile.x == map.width-1) 
-                console.log('go east');    
-            if (currentTile.y == 0)
-                console.log('go north');
-            if (currentTile.y == map.height-1)
-                console.log('go south');
-            transition = true;
-        }
-            
+
 
         if(pauseKey.isDown){
             level_0.managePause();
