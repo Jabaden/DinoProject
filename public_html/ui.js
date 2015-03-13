@@ -51,14 +51,77 @@ var ui = {
         evolutionBar.x = game.width /2;
         evolutionBar.y = game.height - evolutionBar.height/2 - 5;
         
-        playerPic = game.add.sprite(7,7,'playerPic',0);
+        bar1 = game.add.sprite(10,game.height,'bar1');
+        bar1.anchor.setTo(.5,.5);
+        bar1.x = 178;
+        bar1.y = game.height - (evolutionBar.height/2);
+        bar1.maxWidth = bar1.width;
+        bar1.width = 0;        
+
+        bar2 = game.add.sprite(20,game.height,'bar2');
+        bar2.anchor.setTo(.5,.5);
+        bar2.x = bar1.x + 140;
+        bar2.y = game.height - (evolutionBar.height/2);
+        bar2.maxWidth = bar2.width;
+        bar2.width = 0;
+        
+        bar3 = game.add.sprite(30,game.height,'bar3');
+        bar3.anchor.setTo(.5,.5);
+        bar3.x = bar2.x + 140;
+        bar3.y = game.height - (evolutionBar.height/2);
+        bar3.maxWidth = bar3.width;
+        bar3.width = 0;
+        
+        bar4 = game.add.sprite(40,game.height,'bar4');
+        bar4.anchor.setTo(.5,.5);
+        bar4.x = bar3.x + 140;
+        bar4.y = game.height - (evolutionBar.height/2);
+        bar4.maxWidth = bar4.width;
+        bar4.width = 0;
+        
+        playerPic = game.add.sprite(7,7,'happyPic');
+        playerPic.animations.add('getRekt');
+
         
     },
     
     update: function (game, health, maxHealth, timeLeft, maxGameTime,player) { // Pass in health to this function, builds the health bar.
         var newHeight = greenBar.maxHeight * (health/maxHealth);
-        if (newHeight != greenBar.height){
+        var sad = false;
+        var currBar = {value: bar1};
+        function setBar(obj,newBar){
+            obj.value = newBar;
+        }
+        if (playerLevel === 1){
+            setBar( currBar,bar1);
+        }
+        if (playerLevel === 2){
+            setBar( currBar,bar2);
+        }
+        if (playerLevel === 3){
+            setBar( currBar,bar3);
+        }
+        if (playerLevel === 4){
+            setBar( currBar,bar4);
+        }
+        newExpWidth = currBar.value.maxWidth*(playerXP/levelingXP);
+        expWidth = currBar.value.maxWidth;
+        if (health/maxHealth < .5){
+            playerPic.loadTexture('sadPic',0);
+            playerPic.animations.add('getShrekt');
+            sad = true;
+        }
+        if (health/maxHealth > .5){
+            playerPic.loadTexture('happyPic',0);
+            playerPic.animations.add('getRekt');
+            sad = false;
+        }
+        if (newHeight !== greenBar.height){
             greenBar.height = newHeight;
+        }
+        if (newExpWidth > currBar.value.width){
+            console.log(currBar.value);
+            currBar.value.width = newExpWidth;
         }
         if (meteor.y < game.height - meteor.height / 2) {
             meteor.y = (game.height - meteor.height / 2) - game.height * (timeLeft / maxGameTime);

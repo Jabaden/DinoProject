@@ -22,12 +22,20 @@ var end = {
             game.add.sprite(146,215,'win');
             game.input.onDown.add(startOver, self);
             function startOver(){
-                playerXP = 0;
-                playerHealth = 20;
-                maxPlayerHealth = 20;
-                levelingXP = 1;
-                playerSpeed = 200;
-                game.state.start('mainMenu');
+            playerXP = 0;
+            playerHealth = 20;
+            maxPlayerHealth = 20;
+            levelingXP = 20;
+            victoryXP = levelingXP * 2.25*2.25*2.25;
+            playerSpeed = 200;
+            plantsEatenAtLevel = 0;
+            animalsEatenAtLevel = 0;
+            playerLevel = 1;
+            playerDamage = 1;
+            enemyCircleSize = 100;
+            totalTime = 180;
+            timeLeft = totalTime;
+            game.state.start('mainMenu');
             }
         }
     },
@@ -38,12 +46,20 @@ var end = {
             game.add.sprite(146,215,'lose');
             game.input.onDown.add(startOver, self);
             function startOver(){
-                playerXP = 0;
-                playerHealth = 20;
-                maxPlayerHealth = 20;
-                levelingXP = 1;
-                playerSpeed = 200;
-                game.state.start('mainMenu');
+            playerXP = 0;
+            playerHealth = 20;
+            maxPlayerHealth = 20;
+            levelingXP = 20;
+            victoryXP = levelingXP * 2.25*2.25*2.25;
+            playerSpeed = 200;
+            plantsEatenAtLevel = 0;
+            animalsEatenAtLevel = 0;
+            playerLevel = 1;
+            playerDamage = 1;
+            enemyCircleSize = 100;
+            totalTime = 180;
+            timeLeft = totalTime;
+            game.state.start('mainMenu');
             }
         }
     },

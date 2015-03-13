@@ -1,3 +1,4 @@
+var enemyCircleSize = 100;
 
 function enemy(game, image, aImage, group)
 {
@@ -21,11 +22,9 @@ function enemy(game, image, aImage, group)
     this.badGuy.body.width = 30 + (this.sizeModifier * 10);
     this.badGuy.body.height = 30 + (this.sizeModifier * 10);
 
-    this.enemyCircle = new Phaser.Circle(game.world.centerX, 
-        100 + Math.floor(this.badGuy.width*1.5), 
-        100 + Math.floor(this.badGuy.width*1.5) );
-    this.attackCircle = new Phaser.Circle(game.world.centerX, 
-        20 + Math.floor(this.badGuy.width*1.5), 
+    this.enemyCircle = new Phaser.Circle(this.badGuy.x, this.badGuy.y, 
+        enemyCircleSize + Math.floor(this.badGuy.width*2) );
+    this.attackCircle = new Phaser.Circle(this.badGuy.x, this.badGuy.y, 
         20 + Math.floor(this.badGuy.width*1.5) );
     this.enemySwipe = game.add.sprite(350,350,aImage);
     game.physics.p2.enable(this.enemySwipe, false);
@@ -67,6 +66,10 @@ function enemy(game, image, aImage, group)
     this.findNewPos = function(){
         this.badGuy.x = game.world.randomX;
         this.badGuy.y = game.world.randomY;
+        this.enemyCircle.x = this.badGuy.x;
+        this.enemyCircle.y = this.badGuy.y;
+        this.attackCircle.x = this.badGuy.x;
+        this.attackCircle.y = this.badGuy.y;
     }
     this.getCircle = function()
     {
@@ -115,3 +118,10 @@ function enemy(game, image, aImage, group)
         return this.sizeModifer;
     }
 }   
+
+getEnemyCircleSize = function() {
+    return enemyCircleSize;
+}
+setEnemyCircleSize = function(num) {
+    enemyCircleSize = num;
+}
