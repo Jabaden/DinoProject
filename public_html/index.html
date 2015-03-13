@@ -117,10 +117,11 @@ var level_0 = {
             eDino.getEnemyAttack().body.collides(playerCollisionGroup);
             enemyPool.push(eDino);
             
-            // bug: checking this loop condition occasionally crashes, w/ a complaing about a null reference.
-            while (map.getTile(Math.floor(eDino.getX()/40), 
-                    Math.floor(eDino.getY()/40), 
-                    bg_layer, true).index !== 1) {
+            while (eDino.getX() <= 80 || eDino.getX() >= 720 
+                    || eDino.getY() <= 0 || eDino.getY() >= 520 
+                    || map.getTile(Math.floor(eDino.getX()/40), 
+                        Math.floor(eDino.getY()/40), 
+                        bg_layer, true).index !== 1) {
                 eDino.findNewPos();
             }
             
