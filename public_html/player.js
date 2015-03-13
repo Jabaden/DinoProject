@@ -16,6 +16,7 @@ var playerXP = 0;
 var playerHealth = 5;
 var maxPlayerHealth = 5;
 var levelingXP = 20;
+var victoryXP = levelingXP * 2.25*2.25*2.25
 var playerSpeed = 200;
 var aSound;
 var endValue;
