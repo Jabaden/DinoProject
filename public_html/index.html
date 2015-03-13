@@ -71,7 +71,8 @@ var level_0 = {
         bg_layer = map.createLayer(0);
         bg_layer.resizeWorld();
         map.setLayer(0);
-
+        
+        
         // enumerate collidable tile indeces:
         map.setCollisionBetween(2, 6, true, 0);
         map.setCollisionBetween(10, 11, true, 0);
@@ -97,7 +98,8 @@ var level_0 = {
         baddies = game.add.group();
         baddies.enableBody = true;
         baddies.physicsBodyType = Phaser.Physics.P2JS;
-
+        enemyAlert = false;
+        
         for (var i = 0; i < tileObjects.length; i++) {
             var tileBody = tileObjects[i];
             tileBody.setCollisionGroup(tilesCollisionGroup);
