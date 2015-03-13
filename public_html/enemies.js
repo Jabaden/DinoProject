@@ -91,12 +91,12 @@ function enemy(game, image, aImage, group)
     this.cannotAttack = function()
     {
         this.attackAgain = false;
-        console.log("can no longer attack!");
+//        console.log("can no longer attack!");
     }
     this.canAttack = function()
     {
         this.attackAgain = true;
-        console.log("can attack!");
+//        console.log("can attack!");
     }
     this.queryAttack = function()
     {
