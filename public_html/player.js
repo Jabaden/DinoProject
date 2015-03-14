@@ -375,14 +375,3 @@ function player(game, image, aImage, attackSound)
         playerDamage = num;
     };
 }
-
-
-
-/*setupText: function () {
- this.instructions = this.add.text( 510, 600, 
- 'Use Arrow Keys to Move, Press Z to Fire\nClicking does both', 
- {font: '20px monospace', fill: '#fff', align: 'center'}
- );
- this.instructions.anchor.setTo(0.5, 0.5);
- this.time.events.add(5000, this.instructions.destroy, this);
- */
