@@ -111,7 +111,7 @@ function player(game, image, aImage, attackSound)
             animalsEatenAtLevel = 0;
             playerLevel = 1;
             playerDamage = 1;
-            enemyCircleSize = 100;
+            enemyCircle = 100;
             console.log(levelingXP);
             console.log(playerXP);
             game.state.start('level_0');
