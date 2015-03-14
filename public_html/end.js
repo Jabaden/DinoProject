@@ -32,7 +32,8 @@ var end = {
                 animalsEatenAtLevel = 0;
                 playerLevel = 1;
                 playerDamage = 1;
-                timeLeft = totalTime
+                timeLeft = totalTime;
+                enemyCircle = 100;
                 game.state.start('mainMenu');
             }
         }
@@ -54,7 +55,8 @@ var end = {
                 animalsEatenAtLevel = 0;
                 playerLevel = 1;
                 playerDamage = 1;
-                timeLeft = totalTime
+                timeLeft = totalTime;
+                enemyCircle = 100;
                 game.state.start('mainMenu');
             }
         }

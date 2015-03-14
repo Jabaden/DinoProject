@@ -51,7 +51,9 @@ pauseMusic.addEventListener('ended', function() {
 var totalTime = 180;
 var timeLeft = totalTime;
 var enemySmack;
- 
+
+    
+
 
 /* not sure why these lines were here as well as the bottom; commented out.
  *  - brett */
@@ -61,7 +63,7 @@ var enemySmack;
 
 
 var level_0 = {
-    
+        
     create: function() {
 
         enemyPool = [];
@@ -125,16 +127,17 @@ var level_0 = {
                 playerCollisionGroup,tilesCollisionGroup]);
             eDino.getEnemyAttack().body.setCollisionGroup(enemyCollisionGroup);
             eDino.getEnemyAttack().body.collides(playerCollisionGroup);
-            enemyPool.push(eDino);
+            
             while (eDino.getX() <= 80 || eDino.getX() >= 720 
                     || eDino.getY() <= 0 || eDino.getY() >= 520 
                     || map.getTile(Math.floor(eDino.getX()/40), 
                         Math.floor(eDino.getY()/40), 
                         bg_layer, true).index !== 1
-                    || Phaser.Circle.intersects(playerCircle, eDino.getCircle() ) ) {
+                    || Phaser.Circle.intersects(playerCircle, eDino.getCircle() )
+                    || this.spawnOnOtherMobs(eDino) ) {
                 eDino.findNewPos();
             }
-            
+            enemyPool.push(eDino);
         }
         for (var c = 0; c < enemyPool.length; c++)
         {
@@ -152,26 +155,26 @@ var level_0 = {
         
     },
     update: function() {
-       var transition = dinoPlayer.update(map, bg_layer);
-       for(var r = 0; r < enemyPool.length; r++)
-       {
+        var transition = dinoPlayer.update(map, bg_layer);
+       
+        for(var r = 0; r < enemyPool.length; r++)
+        {
            enemyPool[r].circleUpdate();
-       }
-       for(var l = 0; l < enemyPool.length; l++)
-       {
-           if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getCircle()) === true || enemyAlert === true)
-           {
-               enemyAlert = true;
-               for(var q = 0; q < enemyPool.length; q++)
-               {
+        }
+        for(var l = 0; l < enemyPool.length; l++)
+        {
+            if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getCircle()) === true || enemyAlert === true)
+            {
+                enemyAlert = true;
+                for(var q = 0; q < enemyPool.length; q++)
+                {
                     this.accelerateTo(enemyPool[q].getSprite(), dinoPlayer.getSprite(),
                         80 - enemyPool[q].sizeModifier * 8 );
-               }
+                }
 
-           }
+            }
            if(Phaser.Circle.intersects(playerCircle,enemyPool[l].getACircle()) === true)
            {
-//               console.log(enemyPool[l].queryAttack());
                if(enemyPool[l].queryAttack() == true)
                {
                     enemyPool[l].getEnemyAttack().revive();
@@ -195,7 +198,10 @@ var level_0 = {
                     enemySmack.play();
                 }
            }
+
        }
+       
+        
        
        // Win and lose conditions
        timeLeft = timeLeft - game.time.elapsed/1000;
@@ -314,8 +320,20 @@ var level_0 = {
     attackAgain: function()
     {
         enemyCanAttack = true;
-    }
+    },
    
+    spawnOnOtherMobs: function(eDino) {
+        for (i in enemyPool){
+            if (Phaser.Circle.intersects(eDino.getACircle(), enemyPool[i].getACircle() )
+                && enemyPool[i] != eDino){
+                
+                return true;
+            }
+        }
+        return false;
+    },
+    
+    
 };
 
 game.state.add('boot',boot);

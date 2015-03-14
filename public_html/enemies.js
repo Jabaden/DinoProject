@@ -7,10 +7,8 @@ function enemy(game, image, aImage, group)
     this.attackAgain = true;
     console.log("enemy being called");
     this.badGuy = group.create(game.world.randomX, game.world.randomY, image);
-    // bug: this doesn't change the body, only the sprite:
-    // this.badGuy.scale.set(.7);
     game.physics.p2.enable(this.badGuy,true);
-    game.physics.enable(this.badGuy, Phaser.Physics.ARCADE);
+    //game.physics.enable(this.badGuy, Phaser.Physics.ARCADE);
     
     this.badGuy.body.collideWorldBounds = true;
 
@@ -46,7 +44,7 @@ function enemy(game, image, aImage, group)
     this.circleRender = function()
     {
         game.debug.geom(this.enemyCircle,'#cfffff', false);
-        game.debug.geom(this.attackCircle,'#cfffff', false);
+        //game.debug.geom(this.attackCircle,'#cfffff', false);
         
     }
     
@@ -65,10 +63,8 @@ function enemy(game, image, aImage, group)
     this.findNewPos = function(){
         this.badGuy.x = game.world.randomX;
         this.badGuy.y = game.world.randomY;
-        this.enemyCircle.x = this.badGuy.x;
-        this.enemyCircle.y = this.badGuy.y;
-        this.attackCircle.x = this.badGuy.x;
-        this.attackCircle.y = this.badGuy.y;
+        this.circleUpdate();
+        this.circleRender();
     }
     this.getCircle = function()
     {
